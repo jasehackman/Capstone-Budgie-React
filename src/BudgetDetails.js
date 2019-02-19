@@ -9,7 +9,7 @@ class BudgetDetails extends Component {
     componentDidMount(){
         fetch(`${this.props.api.budgets}${this.props.match.params.budgetId}`)
         .then(data => data.json())
-        .then(budgets => this.setState({budgets}))
+        .then(budget => this.setState({budget}))
     }
 
   render() {
