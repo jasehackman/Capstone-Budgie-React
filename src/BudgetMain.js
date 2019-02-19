@@ -18,11 +18,11 @@ class BudgetMain extends Component {
     return (
       <div>
             <h1>Budgets</h1>
-            <ul>
+            <div>
                 {this.state.budgets.map(budget => {
-                    return <BudgetCard budget={budget}/>
+                    return <BudgetCard budget={budget} key={budget.id}/>
                 })}
-            </ul>
+            </div>
 
       </div>
     );
