@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom"
 
 class BudgetMain extends Component {
 
@@ -6,12 +7,13 @@ class BudgetMain extends Component {
 
   render() {
     return (
-      <div>
+      <Link to={`/budget/${this.props.budget.id}`}>
           {/* make url an id */}
-            <li key={this.props.budget.url}>{this.props.budget.name} Amount: {this.props.budget.amount}
-                Spent: {this.props.budget.spent} What's Left {this.props.budget.remaining}
-            </li>
-      </div>
+            <h4>{this.props.budget.name}</h4>
+            <p>Budget Amount: {this.props.budget.amount}</p>
+            <p>Amount Spent: {this.props.budget.spent}</p>
+            <p>Amount Remaining: {this.props.budget.remaining}</p>
+      </Link>
     );
   }
 }
