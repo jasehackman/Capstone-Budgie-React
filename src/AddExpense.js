@@ -64,34 +64,42 @@ class AddExpense extends Component {
         return form
     }
 
-    addEvent(){
-       let eventToAdd={
+    addExpense(){
+       let expenseToAdd={
             name: this.state.newExpenseName,
-            amount: this.state.addExpenseAmount,
+            amount: this.state.newExpenseAmount,
             date: this.state.newExpenseDate,
             notes: this.state.newExpenseNotes,
             category_id: this.state.categoryChoice,
             category: `${this.props.api.categories}${this.state.categoryChoice}`
         }
-        console.log(eventToAdd)
+        console.log(expenseToAdd)
+        fetch(this.props.api.expenses,{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(expenseToAdd)
+        })
 
     }
 
     // TODO: if an expense doesn't have a category nothign is going to happen
     // TODO: if they go back and select defult it will break
+    // TODO: Add Form Validation
     addExpenseForms(){
         let form;
         if (this.state.categoryChoice != ''){
             form =<>
                 <label>Expense Name</label>
-                <input type="text" id='newExpenseName' onChange={(e)=>this.handleFieldChange(e)}/>
+                <input type="text" id='newExpenseName' onChange={(e)=>this.handleFieldChange(e)} />
                 <label>Amount</label>
-                <input type='number' id='newExpenseAmount' onChange={(e)=>this.handleFieldChange(e)}/>
+                <input type='number' id='newExpenseAmount' onChange={(e)=>this.handleFieldChange(e)} />
                 <label>Date</label>
-                <input type='date' id='newExpenseDate' onChange={(e)=>this.handleFieldChange(e)}/>
+                <input type='date' id='newExpenseDate' onChange={(e)=>this.handleFieldChange(e)} />
                 <label>Notes</label>
                 <input type='textfield' id='newExpenseNotes' onChange={(e)=>this.handleFieldChange(e)}/>
-                <button onClick={()=>this.addEvent()}>Add Expense</button>
+                <button onClick={()=>this.addExpense()}>Add Expense</button>
 
             </>
         }
