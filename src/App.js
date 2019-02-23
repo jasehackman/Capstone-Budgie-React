@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar.js'
-import AppManager from './AppManager.js'
+import AppRouter from './AppRouter.js'
 
 class App extends Component {
     state = {
@@ -31,7 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar/>
-        <AppManager api={this.state.api} />
+        <AppRouter api={this.state.api} />
 
       </div>
     );
