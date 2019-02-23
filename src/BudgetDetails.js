@@ -42,7 +42,7 @@ class BudgetDetails extends Component {
             )
     }
 
-    getCategories() {
+    getCategories =()=> {
         fetch(`${this.props.api.categories}?budget_id=${this.props.match.params.budgetId}`)
             .then(data => data.json())
             .then(categories => this.setState({ categories }))
@@ -70,6 +70,10 @@ class BudgetDetails extends Component {
         }).then(() => this.getCategories())
 
     }
+
+
+
+
 
     editBudget() {
         let putBudget = {
@@ -102,9 +106,7 @@ class BudgetDetails extends Component {
         ).then(() =>  this.props.history.push('/'))
     }
 
-    deleteCategory() {
 
-    }
 
 
     render() {
@@ -139,7 +141,7 @@ class BudgetDetails extends Component {
                 {newCategoryForm}
                 <div>
                     {this.state.categories.map(cat => {
-                        return <CategoryCard category={cat} key={cat.id} />
+                        return <CategoryCard category={cat} key={cat.id} getCategories={this.getCategories}/>
                     })}
 
 
