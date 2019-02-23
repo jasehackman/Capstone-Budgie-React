@@ -10,6 +10,7 @@ class NavBar extends Component {
     return (
       <div >
           <Link to='/'>Budgets</Link>
+          <Link to='/addExpense'>Add Expense</Link>
 
 
       </div>
