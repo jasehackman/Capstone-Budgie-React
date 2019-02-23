@@ -63,6 +63,10 @@ class BudgetDetails extends Component {
 
     }
 
+    deleteCategory(){
+
+    }
+
 
   render() {
 
