@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // TODO:Turn this into a modal
+// TODO: Clear forms when you hit submit
 
 class AddExpense extends Component {
 
