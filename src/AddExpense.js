@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 // TODO:Turn this into a modal
+// TODO: Clear forms when you hit submit
 
 class AddExpense extends Component {
 
     state = {
         budgets: [],
         categories: [],
-        budgetChoice: '',
         categoryChoice: '',
         newExpenseName: '',
         newExpenseAmount: '',
@@ -18,12 +18,6 @@ class AddExpense extends Component {
 
     }
 
-    handleBudgetChange = (evt) => {
-        const stateToChange = {}
-        stateToChange[evt.target.id] = evt.target.value
-        this.setState(stateToChange)
-        this.getBudgetCategories()
-    }
 
     handleFieldChange = (evt) => {
         const stateToChange = {}
@@ -37,9 +31,15 @@ class AddExpense extends Component {
             .then(budgets => this.setState({ budgets }))
     }
 
-    getBudgetCategories() {
-        if (this.state.budgetChoice === "0") return
-        fetch(`${this.props.api.categories}?budget_id=${this.state.budgetChoice}`)
+    getBudgetCategories(id) {
+        if (id === "0") {
+            console.log("i'm here")
+            return}
+
+        let url = `${this.props.api.categories}?budget_id=${id}`
+        console.log(url)
+
+        fetch(`${this.props.api.categories}?budget_id=${id}`)
             .then(data => data.json())
             .then(categories => this.setState({ categories }))
     }
@@ -112,7 +112,7 @@ class AddExpense extends Component {
         return (
             <div >
                 <label>Pick Which Budget:</label>
-                <select id='budgetChoice' onChange={(e) => this.handleBudgetChange(e)}>
+                <select onChange={(e) => this.getBudgetCategories(e.target.value)}>
                     <option value="0">Default</option>
                     {this.state.budgets.map(budget => {
                         return <option key={budget.id} value={budget.id}>{budget.name}</option>
