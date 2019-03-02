@@ -2,6 +2,11 @@ const apiURL = "http://127.0.0.1:8000/api/v1/"
 
 class APICalls {
 
+  getWithURL(url){
+    return fetch(url)
+      .then(data => data.json())
+  }
+
   getAll() {
     return fetch(apiURL)
       .then(data => data.json())

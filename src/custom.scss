@@ -1,0 +1,31 @@
+.link-style {
+  text-decoration: none !important;
+}
+
+.body{
+  background-color: #FAFAF9
+};
+
+.nav{
+  background-color: #b779b4
+};
+
+.card{
+  background-color: #7575a32f !important
+};
+
+.scroll{
+  overflow-y: scroll;
+};
+
+$theme-colors: (
+  primary: #a0bda4,
+  info: #b779b4,
+  success: #65b369,
+  warning: #e3a331,
+  danger: #f44336
+
+);
+
+
+@import '~bootstrap/scss/bootstrap.scss';
