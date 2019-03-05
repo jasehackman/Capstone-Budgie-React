@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom"
+import { Progress } from 'reactstrap';
 
 class BudgetMain extends Component {
 
@@ -7,13 +8,18 @@ class BudgetMain extends Component {
 
   render() {
     return (
-      <Link to={`/budget/${this.props.budget.id}`}>
+      <div className="col-4 mb-4 mt-4">
+        <a href={`/budget/${this.props.budget.id}`} className="link-style">
           {/* make url an id */}
-            <h4>{this.props.budget.name}</h4>
+          <div className="body card p-3 shadow">
+            <h4 className="card-title">{this.props.budget.name}</h4>
             <p>Budget Amount: {this.props.budget.amount}</p>
             <p>Amount Spent: {this.props.budget.spent}</p>
             <p>Amount Remaining: {this.props.budget.remaining}</p>
-      </Link>
+            <Progress value={this.props.budget.percent}/>
+          </div>
+        </a>
+      </div>
     );
   }
 }

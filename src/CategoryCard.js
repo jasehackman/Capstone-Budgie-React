@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom"
+import { Progress } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+
 
 
 class CategoryCard extends Component {
@@ -73,14 +76,20 @@ class CategoryCard extends Component {
     render() {
         if (this.state.edit === false) {
             return (
-                <div >
+                <ListGroupItem >
+                  <div className="d-flex justify-content-around">
                     <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
+                  </div>
+                  <div className="d-flex justify-content-around">
                     <p>Amount: {this.state.category.amount}</p>
                     <p>Spent: {this.state.category.spent}</p>
                     <p>Remaining: {this.state.category.remaining}</p>
+                    </div>
+
+                    <Progress value={this.state.category.percent}/>
                     <button onClick={() => { this.deleteCategory() }}>Delete</button>
                     <button onClick={() => { this.setState({ edit: true }) }}>Edit</button>
-                </div>
+                </ListGroupItem >
 
             )
         }
