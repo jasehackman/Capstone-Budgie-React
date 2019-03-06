@@ -28,7 +28,7 @@ class Login extends Component {
         username: this.state.username,
         password: this.state.password
       }
-      fetch('http://127.0.0.1:8000/api-token-auth/', {
+      fetch('http://127.0.0.1:8000/authenticate/', {
         method: 'POST',
         body: JSON.stringify(creds),
         headers: {
@@ -36,8 +36,10 @@ class Login extends Component {
         }
       }).then(data => data.json())
         .then(token => {
+          console.log("token", token)
           localStorage.setItem("user", creds.username)
           localStorage.setItem("token", token.token)
+          localStorage.setItem("id", token.id)
           this.setState({ login: true })
         })
     }

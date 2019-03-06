@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import BudgetCard from './BudgetCard.js'
+import APICalls from './modules/APICalls.js'
+
 
 
 class BudgetMain extends Component {
@@ -15,21 +17,22 @@ class BudgetMain extends Component {
   }
 
   getBudgets() {
-    fetch(this.props.api.budgets)
-      .then(data => data.json())
-      .then(budgets => this.setState({ budgets }))
+
+    APICalls.get(this.props.api.budgets)
+      .then(budgets => this.setState({budgets}))
   }
 
   addBudget() {
     let postBudget = {
       name: this.state.newBudgetName,
       amount: this.state.newBudgetAmount,
-      user: "http://127.0.0.1:8000/users/1/"
+      // user: "http://127.0.0.1:8000/users/1/"
     }
     fetch(this.props.api.budgets, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Token 08ca37355316eae86699692c8dd1dde94958fcbb`
       },
       body: JSON.stringify(postBudget)
     }).then(() => this.getBudgets())
