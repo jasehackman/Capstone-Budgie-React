@@ -3,6 +3,8 @@ import CategoryCard from './CategoryCard.js';
 import { Route, Redirect } from "react-router-dom";
 import { Progress } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
+import APICalls from './modules/APICalls.js'
+
 
 
 class BudgetDetails extends Component {
@@ -25,15 +27,17 @@ class BudgetDetails extends Component {
 
   componentDidMount() {
     let newState = {}
-    fetch(`${this.props.api.budgets}${this.props.match.params.budgetId}`)
-      .then(data => data.json())
+    // fetch(`${this.props.api.budgets}${this.props.match.params.budgetId}`)
+    //   .then(data => data.json())
+    APICalls.getOne(this.props.api.budgets,this.props.match.params.budgetId)
       .then(budget => {
         console.log("budget", budget)
         newState.budget = budget
         newState.editBudgetName = budget.name
         newState.editBudgetAmount = budget.amount
-        fetch(`${this.props.api.categories}?budget_id=${this.props.match.params.budgetId}`)
-          .then(data => data.json())
+        // fetch(`${this.props.api.categories}?budget_id=${this.props.match.params.budgetId}`)
+        //   .then(data => data.json())
+        APICalls.getWithQuery(this.props.api.categories,"budget_id",this.props.match.params.budgetId)
           .then(categories => {
             console.log("categories", categories)
             newState.categories = categories
