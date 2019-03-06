@@ -31,7 +31,7 @@ class App extends Component {
 
   authenticated() {
     if (localStorage.getItem("token")){
-      console.log("top")
+      console.log("here", localStorage.getItem("token"))
       return <div className="App">
 
         <NavBar api={this.state.api} apiRefresh={this.apiRefresh} />
