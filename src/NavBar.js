@@ -16,14 +16,20 @@ class NavBar extends Component {
     })
   }
 
+  logout(){
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+  }
+
   render() {
     return (
       <div className="nav">
           <Link className="nav-link" to='/'>Budgets</Link>
-          {/* <Link className="nav-link" to='/addExpense'>Add Expense</Link> */}
           <button className="btn-primary" onClick={this.toggle}>Add Expense</button>
 
           <NewExpenseModal modal={this.state.modal} toggle={this.toggle} api={this.props.api} apiRefresh={this.props.apiRefresh}/>
+
+          <Link to='/' onClick={()=>this.logout()}>Logout</Link>
 
 
       </div>
