@@ -26,13 +26,13 @@ class BudgetMain extends Component {
     let postBudget = {
       name: this.state.newBudgetName,
       amount: this.state.newBudgetAmount,
-      // user: "http://127.0.0.1:8000/users/1/"
+      user: `http://127.0.0.1:8000/users/${localStorage.getItem('id')}/`
     }
     fetch(this.props.api.budgets, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token 08ca37355316eae86699692c8dd1dde94958fcbb`
+        "Authorization": `Token ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(postBudget)
     }).then(() => this.getBudgets())
