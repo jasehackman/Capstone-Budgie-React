@@ -9,7 +9,8 @@ class BudgetMain extends Component {
   state = {
     budgets: [],
     newBudgetName: '',
-    newBudgetAmount: 0
+    newBudgetAmount: 0,
+    archived: false
   }
 
   componentDidMount() {
@@ -17,9 +18,13 @@ class BudgetMain extends Component {
   }
 
   getBudgets() {
-
-    APICalls.get(this.props.api.budgets)
+    if(this.state.archived === true)
+    APICalls.getWithQuery(this.props.api.budgets,"archived",true)
       .then(budgets => this.setState({ budgets }))
+    else if(this.state.archived === false){
+      APICalls.getWithQuery(this.props.api.budgets,"archived",false)
+      .then(budgets => this.setState({ budgets }))
+    }
   }
 
   addBudget() {
@@ -37,6 +42,10 @@ class BudgetMain extends Component {
     const stateToChange = {}
     stateToChange[evt.target.id] = evt.target.value
     this.setState(stateToChange)
+  }
+
+  archiveClick(){
+    this.setState({archived: !this.state.archived}, ()=> this.getBudgets())
   }
 
   render() {
@@ -58,6 +67,11 @@ class BudgetMain extends Component {
             <div className="mx-auto col">
               <h1 className="mx-auto">Budgets</h1>
             </div>
+            <div className="custom-control custom-switch">
+              <input type="checkbox" className="custom-control-input" id="archived"  onChange={() => this.archiveClick()} />
+              <label className="custom-control-label" htmlFor="archived">Show Archived</label>
+            </div>
+
           </div>
           {newBudgetForm}
           <div className="container">

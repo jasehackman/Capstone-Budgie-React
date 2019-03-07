@@ -20,7 +20,8 @@ class BudgetDetails extends Component {
     // Edit Budget
     edit: false,
     editBudgetName: '',
-    editBudgetAmount: ''
+    editBudgetAmount: '',
+    archived: false,
 
 
   }
@@ -29,14 +30,16 @@ class BudgetDetails extends Component {
     let newState = {}
     APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
       .then(budget => {
+        console.log("from mount", budget)
         newState.budget = budget
         newState.editBudgetName = budget.name
         newState.editBudgetAmount = budget.amount
+        newState.archived = budget.archived
         APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
           .then(categories => {
             newState.categories = categories
-            this.setState(newState)
-            this.setState({ loaded: true })
+            this.setState(newState, ()=> this.setState({loaded: true}))
+
           })
       }
       )
@@ -86,6 +89,16 @@ class BudgetDetails extends Component {
       .then(() => this.props.history.push('/'))
   }
 
+  archiveBudget(){
+    let budget = this.state.budget
+    budget.archived = !this.state.archived
+    console.log("updated budget",budget)
+    APICalls.update(this.props.api.budgets, this.state.budget.id, budget)
+    .then((budget)=> {
+      console.log("from post", budget)
+      this.setState({archived: !this.state.archived})
+    })
+  }
 
 
 
@@ -114,6 +127,11 @@ class BudgetDetails extends Component {
       budgetDetails = <div className="container">
         <div className="d-flex justify-content-around">
           <h1>{this.state.budget.name}</h1>
+        </div>
+        {/* Switch */}
+        <div className="custom-control custom-switch">
+          <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={()=>this.archiveBudget()}/>
+          <label className="custom-control-label" htmlFor="archived">Archive</label>
         </div>
         <div className="d-flex justify-content-around">
           <h4>Amount Spent: {this.state.budget.spent}</h4>
