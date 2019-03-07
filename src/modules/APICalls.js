@@ -61,10 +61,33 @@ class APICalls {
 
     }).then(data => data.json())
   }
+  updateExactUrl(url, data) {
+    let authKey = localStorage.getItem('token')
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${authKey}`
+      },
+      body: JSON.stringify(data)
+
+    }).then(data => data.json())
+  }
 
   delete(url, id) {
     let authKey = localStorage.getItem('token')
     return fetch(`${url}${id}/`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${authKey}`
+      },
+
+    })
+  }
+  deleteExactUrl(url) {
+    let authKey = localStorage.getItem('token')
+    return fetch(url, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json",
