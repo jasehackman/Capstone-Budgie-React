@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Route, Redirect, Link } from "react-router-dom"
+import APICalls from './modules/APICalls.js'
+
 
 // TODO: Error handeling. Ask joe how to handle errors
 
@@ -90,16 +92,16 @@ class Login extends Component {
       register: !this.state.register,
       loginError: false,
       registerError: false
-     })
+    })
   }
 
-  errors(){
+  errors() {
     //handles blank fields
     let er = ""
-    if(this.state.loginError){
+    if (this.state.loginError) {
       er = <p className="alert alert-danger">incorrect email or password</p>
 
-    }else if(this.state.registerError){
+    } else if (this.state.registerError) {
       er = <p className="alert alert-danger">all fields required</p>
 
     }

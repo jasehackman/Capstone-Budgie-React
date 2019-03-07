@@ -22,25 +22,23 @@ class App extends Component {
 
   apiRefresh = () => {
     APICalls.get(this.state.apiurl)
-      .then(api =>{
-        console.log("api", api)
-        this.setState({api})
-        this.setState({loaded: true})
+      .then(api => {
+        this.setState({ api })
+        this.setState({ loaded: true })
       })
 
   }
 
   authenticated() {
-    if (localStorage.getItem("token")){
-      console.log("here", localStorage.getItem("token"))
+    if (localStorage.getItem("token")) {
       return <div className="App">
-
         <NavBar api={this.state.api} apiRefresh={this.apiRefresh} />
         <div className="container">
           <AppRouter api={this.state.api} />
         </div>
-      </div>}
-    else{
+      </div>
+    }
+    else {
       return <div className="App">
         <div className="container">
           <Login />
@@ -51,11 +49,10 @@ class App extends Component {
 
   render() {
 
-    console.log(this.state.api)
     if (this.state.loaded) {
       return (
         (this.authenticated())
-      );
+      )
     } else {
       return <h1>Loading</h1>
     }

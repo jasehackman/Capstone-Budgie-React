@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import APICalls from './modules/APICalls.js';
+
 
 class ExpenseInList extends Component {
     state = {
@@ -23,18 +25,11 @@ class ExpenseInList extends Component {
         })
     }
     deleteExpense(){
-        console.log("delete", this.props.expense.id)
-        fetch(`${this.props.apiExpenses}${this.props.expense.id}`,{
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
-        ).then(() => this.props.getExpenses())
+        APICalls.delete(this.props.apiExpenses, this.props.expense.id)
+        .then(() => this.props.getExpenses())
     }
 
     editExpense(){
-        console.log("edit", this.props.expense.id)
        let editObject = {
             name: this.state.editName,
             amount: this.state.editAmount,
@@ -43,14 +38,7 @@ class ExpenseInList extends Component {
             category_id: this.state.editExpense.category_id,
             category: this.state.editExpense.category
         }
-        fetch(`${this.props.apiExpenses}${this.props.expense.id}/`,{
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(editObject)
-          }
-        ).then((data) => data.json())
+        APICalls.update(this.props.apiExpenses, this.props.expense.id, editObject)
         .then(expense => this.setState({
             editExpense: expense,
             edit: false
