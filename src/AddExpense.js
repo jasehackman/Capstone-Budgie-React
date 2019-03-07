@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import APICalls from './modules/APICalls'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
-// TODO:Turn this into a modal
-// TODO: Clear forms when you hit submit
+
 
 class AddExpense extends Component {
 
@@ -16,8 +15,6 @@ class AddExpense extends Component {
     newExpenseDate: '',
     newExpenseNotes: ''
 
-
-
   }
 
 
@@ -28,7 +25,7 @@ class AddExpense extends Component {
   }
 
   componentDidMount() {
-    APICalls.getWithURL(this.props.api.budgets)
+    APICalls.get(this.props.api.budgets)
       .then(budgets => this.setState({ budgets }))
   }
 
@@ -37,10 +34,7 @@ class AddExpense extends Component {
       return
     }
 
-    let url = `${this.props.api.categories}?budget_id=${id}`
-
-    fetch(`${this.props.api.categories}?budget_id=${id}`)
-      .then(data => data.json())
+    APICalls.getWithQuery(this.props.api.categories, "budget_id", id)
       .then(categories => this.setState({ categories }))
   }
 
@@ -50,15 +44,15 @@ class AddExpense extends Component {
 
       form = <>
         <FormGroup>
-        <Label>Pick Which Category</Label>
-        <Input type="select" id="categoryChoice" onChange={(e) => this.handleFieldChange(e)}>
-          <option value="0">Default</option>
-          {this.state.categories.map(category => {
-            return <option key={category.id} value={category.id}>{category.name}</option>
-          })}
+          <Label>Pick Which Category</Label>
+          <Input type="select" id="categoryChoice" onChange={(e) => this.handleFieldChange(e)}>
+            <option value="0">Default</option>
+            {this.state.categories.map(category => {
+              return <option key={category.id} value={category.id}>{category.name}</option>
+            })}
 
 
-        </Input>
+          </Input>
         </FormGroup>
       </>
 
@@ -75,17 +69,12 @@ class AddExpense extends Component {
       category_id: this.state.categoryChoice,
       category: `${this.props.api.categories}${this.state.categoryChoice}`
     }
-    console.log(expenseToAdd)
-    fetch(this.props.api.expenses, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(expenseToAdd)
-    }).then(()=> {
-      this.props.toggle()
-      this.props.apiRefresh()
-    }
+
+    APICalls.post(this.props.api.expenses, expenseToAdd)
+      .then(() => {
+        this.props.toggle()
+        this.props.apiRefresh()
+      }
       )
 
   }
@@ -98,23 +87,23 @@ class AddExpense extends Component {
     if (this.state.categoryChoice != '') {
       form = <>
         <FormGroup>
-        <Label>Expense Name</Label>
-        <Input type="text" id='newExpenseName' onChange={(e) => this.handleFieldChange(e)} />
+          <Label>Expense Name</Label>
+          <Input type="text" id='newExpenseName' onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <FormGroup>
-        <Label>Amount</Label>
-        <Input type='number' id='newExpenseAmount' onChange={(e) => this.handleFieldChange(e)} />
+          <Label>Amount</Label>
+          <Input type='number' id='newExpenseAmount' onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <FormGroup>
-        <Label>Date</Label>
-        <Input type='date' id='newExpenseDate' onChange={(e) => this.handleFieldChange(e)} />
+          <Label>Date</Label>
+          <Input type='date' id='newExpenseDate' onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <FormGroup>
-        <Label>Notes</Label>
-        <Input type='textfield' id='newExpenseNotes' onChange={(e) => this.handleFieldChange(e)} />
+          <Label>Notes</Label>
+          <Input type='textfield' id='newExpenseNotes' onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <button onClick={() => this.addExpense()}>Add Expense</button>
@@ -130,16 +119,16 @@ class AddExpense extends Component {
     return (
       <Form >
         <FormGroup>
-        <Label>Pick Which Budget:</Label>
-        <Input type="select" onChange={(e) => this.getBudgetCategories(e.target.value)}>
-          <option value="0">Default</option>
-          {this.state.budgets.map(budget => {
-            return <option key={budget.id} value={budget.id}>{budget.name}</option>
+          <Label>Pick Which Budget:</Label>
+          <Input type="select" onChange={(e) => this.getBudgetCategories(e.target.value)}>
+            <option value="0">Default</option>
+            {this.state.budgets.map(budget => {
+              return <option key={budget.id} value={budget.id}>{budget.name}</option>
 
-          })}
+            })}
 
 
-        </Input>
+          </Input>
         </FormGroup>
         {this.addCategoryForm()}
         {this.addExpenseForms()}

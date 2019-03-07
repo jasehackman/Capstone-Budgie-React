@@ -9,37 +9,33 @@ import AddExpense from './AddExpense.js';
 class AppManager extends Component {
 
 
-    render() {
-        return (
-            <React.Fragment >
-                <Route exact path="/" render={(props => {
-                    console.log("props", this.props.api)
-                    return <BudgetMain {...props} api={this.props.api} />
+  render() {
+    return (
+      <React.Fragment >
+        <Route exact path="/" render={(props => {
+          return <BudgetMain {...props} api={this.props.api} />
 
-                })} />
+        })} />
 
-                <Route path="/budget/:budgetId(\d)" render={(props => {
-                    console.log("props", this.props.api)
-                    return <BudgetDetails {...props} api={this.props.api} />
+        <Route path="/budget/:budgetId(\d)" render={(props => {
+          return <BudgetDetails {...props} api={this.props.api} />
 
-                })} />
+        })} />
 
-                <Route path="/category/:categoryId(\d)" render={(props => {
-                    console.log("props", this.props.api)
-                    return <CategoryExpensePage {...props} api={this.props.api} />
+        <Route path="/category/:categoryId(\d)" render={(props => {
+          return <CategoryExpensePage {...props} api={this.props.api} />
 
-                })} />
+        })} />
 
-                <Route path="/addExpense" render={(props => {
-                    console.log("props", this.props.api)
-                    return <AddExpense {...props} api={this.props.api} />
+        <Route path="/addExpense" render={(props => {
+          return <AddExpense {...props} api={this.props.api} />
 
-                })} />
+        })} />
 
 
-            </React.Fragment>
-        );
-    }
+      </React.Fragment>
+    );
+  }
 }
 
 export default AppManager;

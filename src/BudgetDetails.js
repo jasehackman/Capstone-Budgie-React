@@ -3,6 +3,8 @@ import CategoryCard from './CategoryCard.js';
 import { Route, Redirect } from "react-router-dom";
 import { Progress } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
+import APICalls from './modules/APICalls.js'
+
 
 
 class BudgetDetails extends Component {
@@ -25,19 +27,14 @@ class BudgetDetails extends Component {
 
   componentDidMount() {
     let newState = {}
-    fetch(`${this.props.api.budgets}${this.props.match.params.budgetId}`)
-      .then(data => data.json())
+    APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
       .then(budget => {
-        console.log("budget", budget)
         newState.budget = budget
         newState.editBudgetName = budget.name
         newState.editBudgetAmount = budget.amount
-        fetch(`${this.props.api.categories}?budget_id=${this.props.match.params.budgetId}`)
-          .then(data => data.json())
+        APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
           .then(categories => {
-            console.log("categories", categories)
             newState.categories = categories
-            console.log("newState", newState)
             this.setState(newState)
             this.setState({ loaded: true })
           })
@@ -46,8 +43,7 @@ class BudgetDetails extends Component {
   }
 
   getCategories = () => {
-    fetch(`${this.props.api.categories}?budget_id=${this.props.match.params.budgetId}`)
-      .then(data => data.json())
+    APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
       .then(categories => this.setState({ categories }))
   }
 
@@ -64,19 +60,11 @@ class BudgetDetails extends Component {
       budget: `${this.props.api.budgets}${this.props.match.params.budgetId}/`,
       budget_id: this.props.match.params.budgetId
     }
-    fetch(this.props.api.categories, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(postCategory)
-    }).then(() => this.getCategories())
+
+    APICalls.post(this.props.api.categories, postCategory)
+      .then(() => this.getCategories())
 
   }
-
-
-
-
 
   editBudget() {
     let putBudget = {
@@ -85,13 +73,7 @@ class BudgetDetails extends Component {
       user: this.state.budget.user,
       id: this.state.budget.id
     }
-    fetch(`${this.props.api.budgets}${this.state.budget.id}/`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(putBudget)
-    }).then((data) => data.json())
+    APICalls.update(this.props.api.budgets, this.state.budget.id, putBudget)
       .then(budget => this.setState({
         budget: budget,
         edit: false
@@ -100,13 +82,8 @@ class BudgetDetails extends Component {
   }
 
   deleteBudget() {
-    fetch(`${this.props.api.budgets}${this.state.budget.id}/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-    ).then(() => this.props.history.push('/'))
+    APICalls.delete(this.props.api.budgets, this.state.budget.id)
+      .then(() => this.props.history.push('/'))
   }
 
 
@@ -136,27 +113,27 @@ class BudgetDetails extends Component {
     } else {
       budgetDetails = <div className="container">
         <div className="d-flex justify-content-around">
-        <h1>{this.state.budget.name}</h1>
+          <h1>{this.state.budget.name}</h1>
         </div>
         <div className="d-flex justify-content-around">
-        <h4>Amount Spent: {this.state.budget.spent}</h4>
-        <h4>Amount Remaining: {this.state.budget.remaining}</h4>
-        <h4>Total Budget: {this.state.budget.amount}</h4>
+          <h4>Amount Spent: {this.state.budget.spent}</h4>
+          <h4>Amount Remaining: {this.state.budget.remaining}</h4>
+          <h4>Total Budget: {this.state.budget.amount}</h4>
 
         </div>
 
-        <Progress value={this.state.budget.percent}/>
+        <Progress value={this.state.budget.percent} />
         <button onClick={() => this.setState({ edit: true })}>Edit</button>
         <button onClick={() => this.deleteBudget()}>Delete</button>
         {newCategoryForm}
         <div className="">
-        <ListGroup className="">
-          {this.state.categories.map(cat => {
-            return <CategoryCard category={cat} key={cat.id} getCategories={this.getCategories} />
-          })}
+          <ListGroup className="">
+            {this.state.categories.map(cat => {
+              return <CategoryCard category={cat} key={cat.id} getCategories={this.getCategories} />
+            })}
 
 
-        </ListGroup>
+          </ListGroup>
         </div>
 
       </div>

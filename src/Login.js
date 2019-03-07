@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Route, Redirect, Link } from "react-router-dom"
+import APICalls from './modules/APICalls.js'
+
 
 // TODO: Error handeling. Ask joe how to handle errors
 
@@ -28,7 +30,7 @@ class Login extends Component {
         username: this.state.username,
         password: this.state.password
       }
-      fetch('http://127.0.0.1:8000/api-token-auth/', {
+      fetch('http://127.0.0.1:8000/authenticate/', {
         method: 'POST',
         body: JSON.stringify(creds),
         headers: {
@@ -36,8 +38,10 @@ class Login extends Component {
         }
       }).then(data => data.json())
         .then(token => {
+          console.log("token", token)
           localStorage.setItem("user", creds.username)
           localStorage.setItem("token", token.token)
+          localStorage.setItem("id", token.id)
           this.setState({ login: true })
         })
     }
@@ -88,16 +92,16 @@ class Login extends Component {
       register: !this.state.register,
       loginError: false,
       registerError: false
-     })
+    })
   }
 
-  errors(){
+  errors() {
     //handles blank fields
     let er = ""
-    if(this.state.loginError){
+    if (this.state.loginError) {
       er = <p className="alert alert-danger">incorrect email or password</p>
 
-    }else if(this.state.registerError){
+    } else if (this.state.registerError) {
       er = <p className="alert alert-danger">all fields required</p>
 
     }
