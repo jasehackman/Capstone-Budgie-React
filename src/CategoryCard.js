@@ -47,7 +47,6 @@ class CategoryCard extends Component {
 
     APICalls.updateExactUrl(this.state.category.url, putCategory)
       .then(category => {
-        console.log(category)
         this.setState({
           category: category,
           edit: false

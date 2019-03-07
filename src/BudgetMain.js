@@ -19,7 +19,7 @@ class BudgetMain extends Component {
   getBudgets() {
 
     APICalls.get(this.props.api.budgets)
-      .then(budgets => this.setState({budgets}))
+      .then(budgets => this.setState({ budgets }))
   }
 
   addBudget() {
@@ -28,14 +28,9 @@ class BudgetMain extends Component {
       amount: this.state.newBudgetAmount,
       user: `http://127.0.0.1:8000/users/${localStorage.getItem('id')}/`
     }
-    fetch(this.props.api.budgets, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(postBudget)
-    }).then(() => this.getBudgets())
+
+    APICalls.post(this.props.api.budgets, postBudget)
+      .then(() => this.getBudgets())
   }
 
   handleFieldChange = (evt) => {
@@ -60,9 +55,9 @@ class BudgetMain extends Component {
 
         <div className="">
           <div className="row">
-          <div className="mx-auto col">
-          <h1 className="mx-auto">Budgets</h1>
-          </div>
+            <div className="mx-auto col">
+              <h1 className="mx-auto">Budgets</h1>
+            </div>
           </div>
           {newBudgetForm}
           <div className="container">
