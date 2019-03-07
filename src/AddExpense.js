@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import APICalls from './modules/APICalls'
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
+
 // TODO:Turn this into a modal
 // TODO: Clear forms when you hit submit
 
@@ -28,7 +29,7 @@ class AddExpense extends Component {
   }
 
   componentDidMount() {
-    APICalls.getWithURL(this.props.api.budgets)
+    APICalls.get(this.props.api.budgets)
       .then(budgets => this.setState({ budgets }))
   }
 
@@ -37,10 +38,7 @@ class AddExpense extends Component {
       return
     }
 
-    let url = `${this.props.api.categories}?budget_id=${id}`
-
-    fetch(`${this.props.api.categories}?budget_id=${id}`)
-      .then(data => data.json())
+    APICalls.getWithQuery(this.props.api.categories,"budget_id", id)
       .then(categories => this.setState({ categories }))
   }
 
@@ -75,14 +73,9 @@ class AddExpense extends Component {
       category_id: this.state.categoryChoice,
       category: `${this.props.api.categories}${this.state.categoryChoice}`
     }
-    console.log(expenseToAdd)
-    fetch(this.props.api.expenses, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(expenseToAdd)
-    }).then(()=> {
+
+    APICalls.post(this.props.api.expenses, expenseToAdd)
+    .then(()=> {
       this.props.toggle()
       this.props.apiRefresh()
     }
