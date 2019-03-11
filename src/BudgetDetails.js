@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { Progress } from 'reactstrap';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import APICalls from './modules/APICalls.js'
+import NewItemModal from './NewItemModal.js'
 
 
 
@@ -22,6 +23,7 @@ class BudgetDetails extends Component {
     editBudgetName: '',
     editBudgetAmount: '',
     archived: false,
+    modal: false,
 
 
   }
@@ -45,7 +47,7 @@ class BudgetDetails extends Component {
       )
   }
 
-  getCategories = () => {
+  get = () => {
     APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
       .then(categories => this.setState({ categories }))
   }
@@ -56,7 +58,7 @@ class BudgetDetails extends Component {
     this.setState(stateToChange)
   }
 
-  addCategory() {
+  addCategory= () => {
     let postCategory = {
       amount: this.state.newCategoryAmount,
       name: this.state.newCategoryName,
@@ -65,11 +67,14 @@ class BudgetDetails extends Component {
     }
 
     APICalls.post(this.props.api.categories, postCategory)
-      .then(() => this.getCategories())
+      .then(() => {
+        this.get()
+        this.toggle()
+      })
 
   }
 
-  editBudget() {
+  editBudget = () => {
     let putBudget = {
       amount: this.state.editBudgetAmount,
       name: this.state.editBudgetName,
@@ -84,12 +89,17 @@ class BudgetDetails extends Component {
 
   }
 
-  deleteBudget() {
+  toggle = () => {
+    this.setState(({modal}) => ({modal: !modal})
+    )
+  }
+
+  deleteBudget = () => {
     APICalls.delete(this.props.api.budgets, this.state.budget.id)
       .then(() => this.props.history.push('/'))
   }
 
-  archiveBudget(){
+  archiveBudget = ()=>{
     let budget = this.state.budget
     budget.archived = !this.state.archived
     console.log("updated budget",budget)
@@ -104,7 +114,7 @@ class BudgetDetails extends Component {
 
   render() {
 
-    let newCategoryForm = (<div>
+    let form = (<div>
       <label>Category Name</label>
       <input type="text" id="newCategoryName" onChange={e => this.handleFieldChange(e)} />
       <label>Category Amount</label>
@@ -143,11 +153,14 @@ class BudgetDetails extends Component {
         <Progress value={this.state.budget.percent} />
         <button onClick={() => this.setState({ edit: true })}>Edit</button>
         <button onClick={() => this.deleteBudget()}>Delete</button>
-        {newCategoryForm}
+
+        <button className="btn-primary" onClick={this.toggle}>Add Category</button>
+
+        <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={form} />
         <div className="">
           <ListGroup className="">
             {this.state.categories.map(cat => {
-              return <CategoryCard category={cat} key={cat.id} getCategories={this.getCategories} />
+              return <CategoryCard category={cat} key={cat.id} get={this.get} />
             })}
 
 

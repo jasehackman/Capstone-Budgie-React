@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class NewBudgetModal extends Component {
+class NewItemModal extends Component {
 
 
   render() {
@@ -10,7 +10,7 @@ class NewBudgetModal extends Component {
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} >
           <ModalHeader toggle={this.props.toggle}>Add Expense</ModalHeader>
           <ModalBody>
-            {this.props.newBudgetForm}
+            {this.props.form}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
@@ -21,4 +21,4 @@ class NewBudgetModal extends Component {
   }
 }
 
-export default NewBudgetModal;
+export default NewItemModal;
