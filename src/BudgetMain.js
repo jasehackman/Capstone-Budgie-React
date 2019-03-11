@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BudgetCard from './BudgetCard.js'
 import APICalls from './modules/APICalls.js'
+import NewBudgetModal from './NewBudgetModal.js'
 
 
 
@@ -10,14 +11,15 @@ class BudgetMain extends Component {
     budgets: [],
     newBudgetName: '',
     newBudgetAmount: 0,
-    archived: false
+    archived: false,
+    modal: false
   }
 
   componentDidMount() {
     this.getBudgets()
   }
 
-  getBudgets() {
+  getBudgets = () => {
     if(this.state.archived === true)
     APICalls.getWithQuery(this.props.api.budgets,"archived",true)
       .then(budgets => this.setState({ budgets }))
@@ -27,7 +29,7 @@ class BudgetMain extends Component {
     }
   }
 
-  addBudget() {
+  addBudget = () => {
     let postBudget = {
       name: this.state.newBudgetName,
       amount: this.state.newBudgetAmount,
@@ -35,7 +37,10 @@ class BudgetMain extends Component {
     }
 
     APICalls.post(this.props.api.budgets, postBudget)
-      .then(() => this.getBudgets())
+      .then(() => {
+        this.getBudgets()
+        this.toggle()
+      })
   }
 
   handleFieldChange = (evt) => {
@@ -46,6 +51,11 @@ class BudgetMain extends Component {
 
   archiveClick(){
     this.setState(({archived}) =>({archived: !archived}), ()=> this.getBudgets())
+  }
+
+  toggle = () => {
+    this.setState(({modal}) => ({modal: !modal})
+    )
   }
 
   render() {
@@ -73,7 +83,8 @@ class BudgetMain extends Component {
             </div>
 
           </div>
-          {newBudgetForm}
+          <button className="btn-primary" onClick={this.toggle}>Add Budget</button>
+          <NewBudgetModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} newBudgetForm={newBudgetForm} />
           <div className="container">
             <div className="row">
               {this.state.budgets.map(budget => {
