@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import CategoryCard from './CategoryCard.js';
-import { Route, Redirect } from "react-router-dom";
-import { Progress } from 'reactstrap';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import React, { Component } from 'react'
+import CategoryCard from './CategoryCard.js'
+import { Route, Redirect } from "react-router-dom"
+import { Progress } from 'reactstrap'
+import { ListGroup, ListGroupItem } from 'reactstrap'
 import APICalls from './modules/APICalls.js'
 import NewItemModal from './NewItemModal.js'
+import BudgetForm from './forms/BudgetForm.js'
+import PropTypes from 'prop-types'
+
 
 
 
@@ -32,15 +35,14 @@ class BudgetDetails extends Component {
     let newState = {}
     APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
       .then(budget => {
-        console.log("from mount", budget)
         newState.budget = budget
         newState.editBudgetName = budget.name
         newState.editBudgetAmount = budget.amount
         newState.archived = budget.archived
-        APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
+        APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
           .then(categories => {
             newState.categories = categories
-            this.setState(newState, ()=> this.setState({loaded: true}))
+            this.setState(newState, () => this.setState({ loaded: true }))
 
           })
       }
@@ -48,7 +50,7 @@ class BudgetDetails extends Component {
   }
 
   get = () => {
-    APICalls.getWithQuery(this.props.api.categories, "budget_id", this.props.match.params.budgetId)
+    APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
       .then(categories => this.setState({ categories }))
   }
 
@@ -58,7 +60,7 @@ class BudgetDetails extends Component {
     this.setState(stateToChange)
   }
 
-  addCategory= () => {
+  addCategory = () => {
     let postCategory = {
       amount: this.state.newCategoryAmount,
       name: this.state.newCategoryName,
@@ -72,6 +74,18 @@ class BudgetDetails extends Component {
         this.toggle()
       })
 
+  }
+
+  getBudget = () => {
+    let newState = {}
+    APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
+      .then((budget) => {
+        newState.budget = budget
+        newState.editBudgetName = budget.name
+        newState.editBudgetAmount = budget.amount
+        newState.archived = budget.archived
+        this.setState(newState)
+      })
   }
 
   editBudget = () => {
@@ -90,7 +104,12 @@ class BudgetDetails extends Component {
   }
 
   toggle = () => {
-    this.setState(({modal}) => ({modal: !modal})
+    this.setState(({ modal }) => ({ modal: !modal })
+    )
+  }
+
+  editToggle = () => {
+    this.setState(({ edit }) => ({ edit: !edit })
     )
   }
 
@@ -99,22 +118,20 @@ class BudgetDetails extends Component {
       .then(() => this.props.history.push('/'))
   }
 
-  archiveBudget = ()=>{
+  archiveBudget = () => {
     let budget = this.state.budget
     budget.archived = !this.state.archived
-    console.log("updated budget",budget)
     APICalls.update(this.props.api.budgets, this.state.budget.id, budget)
-    .then((budget)=> {
-      console.log("from post", budget)
-      this.setState({archived: !this.state.archived})
-    })
+      .then(() => {
+        this.setState({ archived: !this.state.archived })
+      })
   }
 
 
 
   render() {
 
-    let form = (<div>
+    let categoryForm = (<div>
       <label>Category Name</label>
       <input type="text" id="newCategoryName" onChange={e => this.handleFieldChange(e)} />
       <label>Category Amount</label>
@@ -124,57 +141,63 @@ class BudgetDetails extends Component {
 
     // budgets Details
     let budgetDetails
-    if (this.state.edit) {
-      budgetDetails = (<div>
-        <label>Budget Name</label>
-        <input type="text" id="editBudgetName" defaultValue={this.state.editBudgetName} onChange={e => this.handleFieldChange(e)} />
-        <label>Budget Amount</label>
-        <input type="number" id='editBudgetAmount' defaultValue={this.state.editBudgetAmount} onChange={e => this.handleFieldChange(e)} />
-        <button onClick={() => this.editBudget()}>Edit Budget</button>
-        <button onClick={() => this.setState({ edit: false })}>Back</button>
-      </div>)
-    } else {
-      budgetDetails = <div className="container">
-        <div className="d-flex justify-content-around">
-          <h1>{this.state.budget.name}</h1>
-        </div>
-        {/* Switch */}
-        <div className="custom-control custom-switch">
-          <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={()=>this.archiveBudget()}/>
-          <label className="custom-control-label" htmlFor="archived">Archive</label>
-        </div>
-        <div className="d-flex justify-content-around">
-          <h4>Amount Spent: {this.state.budget.spent}</h4>
-          <h4>Amount Remaining: {this.state.budget.remaining}</h4>
-          <h4>Total Budget: {this.state.budget.amount}</h4>
 
-        </div>
-
-        <Progress value={this.state.budget.percent} />
-        <button onClick={() => this.setState({ edit: true })}>Edit</button>
-        <button onClick={() => this.deleteBudget()}>Delete</button>
-
-        <button className="btn-primary" onClick={this.toggle}>Add Category</button>
-
-        <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={form} />
-        <div className="">
-          <ListGroup className="">
-            {this.state.categories.map(cat => {
-              return <CategoryCard category={cat} key={cat.id} get={this.get} />
-            })}
+    let budgetEditForm = (<div>
+      <label>Budget Name</label>
+      <input type="text" id="editBudgetName" defaultValue={this.state.editBudgetName} onChange={e => this.handleFieldChange(e)} />
+      <label>Budget Amount</label>
+      <input type="number" id='editBudgetAmount' defaultValue={this.state.editBudgetAmount} onChange={e => this.handleFieldChange(e)} />
+      <button onClick={() => this.editBudget()}>Edit Budget</button>
+      <button onClick={() => this.editToggle()}>Back</button>
+    </div>)
 
 
-          </ListGroup>
-        </div>
+
+
+
+    budgetDetails = <div className="container">
+      <div className="d-flex justify-content-around">
+        <h1>{this.state.budget.name}</h1>
+      </div>
+      {/* Switch */}
+      <div className="custom-control custom-switch">
+        <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={() => this.archiveBudget()} />
+        <label className="custom-control-label" htmlFor="archived">Archive</label>
+      </div>
+      <div className="d-flex justify-content-around">
+        <h4>Amount Spent: {this.state.budget.spent}</h4>
+        <h4>Amount Remaining: {this.state.budget.remaining}</h4>
+        <h4>Total Budget: {this.state.budget.amount}</h4>
 
       </div>
-    }
+      <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBudget} url={this.props.api.budgets}/>} />
+
+      <Progress value={this.state.budget.percent} />
+      <button onClick={() => this.setState({ edit: true })}>Edit</button>
+      <button onClick={() => this.deleteBudget()}>Delete</button>
+
+      <button className="btn-primary" onClick={this.toggle}>Add Category</button>
+
+      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={categoryForm} />
+      <div className="">
+        <ListGroup className="">
+          {this.state.categories.map(cat => {
+            return <CategoryCard category={cat} key={cat.id} get={this.get} />
+          })}
+
+
+        </ListGroup>
+      </div>
+
+    </div>
+
 
     if (this.state.loaded) {
 
-      return (budgetDetails
+      return (
+        budgetDetails
 
-      );
+      )
     }
     else {
       return <h1>Loading...</h1>
@@ -182,4 +205,11 @@ class BudgetDetails extends Component {
   }
 }
 
-export default BudgetDetails;
+export default BudgetDetails
+
+BudgetDetails.propTypes = {
+  api: PropTypes.object,
+  match: PropTypes.object,
+  history: PropTypes.array,
+
+}

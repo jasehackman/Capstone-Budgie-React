@@ -16,10 +16,10 @@ class BudgetMain extends Component {
   }
 
   componentDidMount() {
-    this.get()
+    this.getBudgets ()
   }
 
-  get = () => {
+  getBudgets = () => {
     if(this.state.archived === true)
     APICalls.getWithQuery(this.props.api.budgets,"archived",true)
       .then(budgets => this.setState({ budgets }))
@@ -38,7 +38,7 @@ class BudgetMain extends Component {
 
     APICalls.post(this.props.api.budgets, postBudget)
       .then(() => {
-        this.get()
+        this.getBudgets()
         this.toggle()
       })
   }
@@ -50,7 +50,7 @@ class BudgetMain extends Component {
   }
 
   archiveClick(){
-    this.setState(({archived}) =>({archived: !archived}), ()=> this.get())
+    this.setState(({archived}) =>({archived: !archived}), ()=> this.getBudgets)
   }
 
   toggle = () => {
@@ -59,7 +59,7 @@ class BudgetMain extends Component {
   }
 
   render() {
-    let form = (<div>
+    let budgetForm = (<div>
       <label>Budget Name</label>
       <input type="text" id="newBudgetName" onChange={e => this.handleFieldChange(e)} />
       <label>Budget Amount</label>
@@ -84,7 +84,7 @@ class BudgetMain extends Component {
 
           </div>
           <button className="btn-primary" onClick={this.toggle}>Add Budget</button>
-          <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={form} />
+          <NewItemModal modal={this.state.modal} toggle={this.toggle} get={this.getBudgets} form={budgetForm} />
           <div className="container">
             <div className="row">
               {this.state.budgets.map(budget => {
