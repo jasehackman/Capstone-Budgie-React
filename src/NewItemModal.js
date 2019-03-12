@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import PropTypes from 'prop-types'
 
 class NewItemModal extends Component {
 
@@ -12,13 +13,17 @@ class NewItemModal extends Component {
           <ModalBody>
             {this.props.form}
           </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-          </ModalFooter>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default NewItemModal;
+export default NewItemModal
+
+NewItemModal.propTypes = {
+  modal: PropTypes.object,
+  form: PropTypes.object,
+  toggle: PropTypes.func,
+
+}

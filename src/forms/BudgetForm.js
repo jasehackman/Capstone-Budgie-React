@@ -34,7 +34,6 @@ class BudgetForm extends Component {
         user: this.state.user,
         id: this.state.id
       }
-      console.log(budget)
       APICalls.update(this.props.url, budget.id, budget)
         .then(budget => {
           this.props.get()
@@ -44,6 +43,7 @@ class BudgetForm extends Component {
       const budget = {
         amount: this.state.budgetAmount,
         name: this.state.budgetName,
+        user: `${this.props.user}${localStorage.getItem('id')}/`
       }
       APICalls.post(this.props.url, budget)
         .then(() => {
@@ -92,5 +92,6 @@ BudgetForm.propTypes = {
   toggle: PropTypes.func,
   get: PropTypes.func,
   url: PropTypes.string,
+  user: PropTypes.string,
 
 }
