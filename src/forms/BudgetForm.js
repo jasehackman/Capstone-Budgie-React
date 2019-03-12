@@ -43,7 +43,7 @@ class BudgetForm extends Component {
       const budget = {
         amount: this.state.budgetAmount,
         name: this.state.budgetName,
-        user: `${this.props.user}${localStorage.getItem('id')}/`
+        user: `${this.state.user}${localStorage.getItem('id')}/`
       }
       APICalls.post(this.props.url, budget)
         .then(() => {

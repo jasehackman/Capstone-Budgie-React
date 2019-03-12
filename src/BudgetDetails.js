@@ -6,6 +6,7 @@ import { ListGroup, ListGroupItem } from 'reactstrap'
 import APICalls from './modules/APICalls.js'
 import NewItemModal from './NewItemModal.js'
 import BudgetForm from './forms/BudgetForm.js'
+import CategoryForm from './forms/CategoryForm.js'
 import PropTypes from 'prop-types'
 
 
@@ -178,7 +179,8 @@ class BudgetDetails extends Component {
 
       <button className="btn-primary" onClick={this.toggle}>Add Category</button>
 
-      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={categoryForm} />
+      {/* Category Modal */}
+      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.get} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId}/>} />
       <div className="">
         <ListGroup className="">
           {this.state.categories.map(cat => {
