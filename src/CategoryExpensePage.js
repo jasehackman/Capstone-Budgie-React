@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import ExpenseInList from './ExpenseInList.js'
-import APICalls from './modules/APICalls.js';
+import APICalls from './modules/APICalls.js'
 
 class CategoryExpensePage extends Component {
 
@@ -14,7 +14,7 @@ class CategoryExpensePage extends Component {
   }
 
   getExpenses = () => {
-    APICalls.getWithQuery(this.props.api.expenses,"category_id", this.props.match.params.categoryId)
+    APICalls.getWithQuery(this.props.api.expenses,'category_id', this.props.match.params.categoryId)
       .then(expenses => this.setState({ expenses }))
   }
 
@@ -22,7 +22,7 @@ class CategoryExpensePage extends Component {
     return (
       <>
         {this.state.expenses.map(expense => {
-          return <ExpenseInList expense={expense} key={expense.id} getExpenses={this.getExpenses} apiExpenses={this.props.api.expenses} />
+          return <ExpenseInList expense={expense} key={expense.id} getExpenses={this.getExpenses} apiExpenses={this.props.api.expenses} api={this.props.api}/>
         })}
       </>
     )
@@ -30,4 +30,4 @@ class CategoryExpensePage extends Component {
   }
 }
 
-export default CategoryExpensePage;
+export default CategoryExpensePage

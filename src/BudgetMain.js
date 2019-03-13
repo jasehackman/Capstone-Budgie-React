@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import BudgetCard from './BudgetCard.js'
 import APICalls from './modules/APICalls.js'
-
+import NewItemModal from './NewItemModal.js'
+import PropTypes from 'prop-types'
+import BudgetForm from './forms/BudgetForm.js'
 
 
 class BudgetMain extends Component {
@@ -10,32 +12,22 @@ class BudgetMain extends Component {
     budgets: [],
     newBudgetName: '',
     newBudgetAmount: 0,
-    archived: false
+    archived: false,
+    modal: false
   }
 
   componentDidMount() {
     this.getBudgets()
   }
 
-  getBudgets() {
-    if(this.state.archived === true)
-    APICalls.getWithQuery(this.props.api.budgets,"archived",true)
-      .then(budgets => this.setState({ budgets }))
-    else if(this.state.archived === false){
-      APICalls.getWithQuery(this.props.api.budgets,"archived",false)
-      .then(budgets => this.setState({ budgets }))
+  getBudgets = () => {
+    if (this.state.archived === true)
+      APICalls.getWithQuery(this.props.api.budgets, 'archived', true)
+        .then(budgets => this.setState({ budgets }))
+    else if (this.state.archived === false) {
+      APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
+        .then(budgets => this.setState({ budgets }))
     }
-  }
-
-  addBudget() {
-    let postBudget = {
-      name: this.state.newBudgetName,
-      amount: this.state.newBudgetAmount,
-      user: `http://127.0.0.1:8000/users/${localStorage.getItem('id')}/`
-    }
-
-    APICalls.post(this.props.api.budgets, postBudget)
-      .then(() => this.getBudgets())
   }
 
   handleFieldChange = (evt) => {
@@ -44,22 +36,18 @@ class BudgetMain extends Component {
     this.setState(stateToChange)
   }
 
-  archiveClick(){
-    this.setState(({archived}) =>({archived: !archived}), ()=> this.getBudgets())
+  archiveClick() {
+    this.setState(({ archived }) => ({ archived: !archived }), () => this.getBudgets())
+  }
+
+  toggle = () => {
+    this.setState(({ modal }) => ({ modal: !modal })
+    )
   }
 
   render() {
-    let newBudgetForm = (<div>
-      <label>Budget Name</label>
-      <input type="text" id="newBudgetName" onChange={e => this.handleFieldChange(e)} />
-      <label>Budget Amount</label>
-      <input type="number" id='newBudgetAmount' onChange={e => this.handleFieldChange(e)} />
-      <button className="btn-primary" onClick={() => this.addBudget()}>Add Budget</button>
-    </div>)
+
     if (this.state.budgets.length > 0) {
-
-
-
       return (
 
         <div className="">
@@ -68,12 +56,13 @@ class BudgetMain extends Component {
               <h1 className="mx-auto">Budgets</h1>
             </div>
             <div className="custom-control custom-switch">
-              <input type="checkbox" className="custom-control-input" id="archived"  onChange={() => this.archiveClick()} />
+              <input type="checkbox" className="custom-control-input" id="archived" onChange={() => this.archiveClick()} />
               <label className="custom-control-label" htmlFor="archived">Show Archived</label>
             </div>
 
           </div>
-          {newBudgetForm}
+          <button className="btn-primary" onClick={this.toggle}>Add Budget</button>
+          <NewItemModal modal={this.state.modal} toggle={this.toggle} get={this.getBudgets} form={<BudgetForm get={this.getBudgets} url={this.props.api.budgets} toggle={this.toggle} user={this.props.api.users}/>} />
           <div className="container">
             <div className="row">
               {this.state.budgets.map(budget => {
@@ -83,11 +72,17 @@ class BudgetMain extends Component {
           </div>
 
         </div>
-      );
+      )
     } else {
       return (<p>loading</p>)
     }
   }
 }
 
-export default BudgetMain;
+export default BudgetMain
+
+BudgetMain.propTypes = {
+  api: PropTypes.object,
+
+
+}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AddExpense from './AddExpense'
+import PropTypes from 'prop-types'
+
 
 class NewExpenseModal extends Component {
 
@@ -22,4 +24,8 @@ class NewExpenseModal extends Component {
   }
 }
 
-export default NewExpenseModal;
+export default NewExpenseModal
+
+NewExpenseModal.propTypes = {
+ modal: PropTypes.bool
+}
