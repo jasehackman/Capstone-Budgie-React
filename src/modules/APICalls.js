@@ -24,6 +24,17 @@ class APICalls {
     }).then(data => data.json())
   }
 
+  getOneWithUrl(url) {
+    let authKey = localStorage.getItem('token')
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${authKey}`
+      }
+    }).then(data => data.json())
+  }
+
   getWithQuery(url, query, param) {
     let authKey = localStorage.getItem('token')
     return fetch(`${url}?${query}=${param}`, {

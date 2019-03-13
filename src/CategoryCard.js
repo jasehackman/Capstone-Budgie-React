@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from "react-router-dom"
-import { Progress } from 'reactstrap';
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import APICalls from './modules/APICalls.js';
+import { Progress } from 'reactstrap'
+import { ListGroup, ListGroupItem } from 'reactstrap'
+import APICalls from './modules/APICalls.js'
+import PropTypes from 'prop-types'
+import NewItemModal from './NewItemModal.js'
+import CategoryForm from './forms/CategoryForm.js';
+
 
 
 
@@ -31,8 +35,8 @@ class CategoryCard extends Component {
     this.setState(stateToChange)
   }
 
-  getCategory() {
-    APICalls.getOne(this.props.api.category, this.props.category.id)
+  getCategory = () => {
+    APICalls.getOneWithUrl(this.props.category.url)
       .then(category => this.setState({ category }))
   }
 
@@ -56,41 +60,48 @@ class CategoryCard extends Component {
   }
   deleteCategory() {
     APICalls.deleteExactUrl(this.state.category.url)
-    .then(() => this.props.getCategories())
+      .then(() => this.props.get())
+  }
+
+  editToggle = () => {
+    this.setState(({ edit }) => ({ edit: !edit })
+    )
   }
 
   render() {
-    if (this.state.edit === false) {
-      return (
-        <ListGroupItem >
-          <div className="d-flex justify-content-around">
-            <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
-          </div>
-          <div className="d-flex justify-content-around">
-            <p>Amount: {this.state.category.amount}</p>
-            <p>Spent: {this.state.category.spent}</p>
-            <p>Remaining: {this.state.category.remaining}</p>
-          </div>
+    return (
+      <ListGroupItem >
+        <div className="d-flex justify-content-around">
+          <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
+        </div>
+        <div className="d-flex justify-content-around">
+          <p>Amount: {this.state.category.amount}</p>
+          <p>Spent: {this.state.category.spent}</p>
+          <p>Remaining: {this.state.category.remaining}</p>
+        </div>
 
-          <Progress value={this.state.category.percent} />
-          <button onClick={() => { this.deleteCategory() }}>Delete</button>
-          <button onClick={() => { this.setState({ edit: true }) }}>Edit</button>
-        </ListGroupItem >
+        <Progress value={this.state.category.percent} />
+        <button onClick={() => { this.deleteCategory() }}>Delete</button>
+        <button onClick={() => this.editToggle()}>Edit</button>
+        <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={
+          <CategoryForm
+            toggle={this.editToggle} category={this.state.category} get={this.getCategory}
+            budget={this.props.category.budget} budget_id={this.props.category.budget_id}
+            url={this.props.category.url}
+          />
+        } />
+      </ListGroupItem >
 
-      )
-    }
-    else if (this.state.edit === true) {
-      return (<div>
-        <label>Expense Name</label>
-        <input type="text" id='editName' defaultValue={this.state.category.name} onChange={(e) => this.handleFieldChange(e)} />
-        <label>Amount</label>
-        <input type='number' id='editAmount' defaultValue={this.state.category.amount} onChange={(e) => this.handleFieldChange(e)} />
-        <button onClick={() => this.editCategory()}>Save Category</button>
-        <button onClick={() => this.setState({ edit: false })}>Back</button>
-      </div>
-      )
-    }
+
+    )
+
   }
 }
 
-export default CategoryCard;
+export default CategoryCard
+CategoryCard.propTypes = {
+  get: PropTypes.func,
+  category: PropTypes.object,
+  api: PropTypes.object
+
+}

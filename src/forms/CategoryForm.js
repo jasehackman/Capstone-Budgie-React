@@ -28,7 +28,22 @@ class CategoryForm extends Component {
 
   post() {
     if (this.props.category) {
-      console.log("yep")
+      const category = {
+        amount: this.state.amount,
+        name: this.state.name,
+        budget: this.props.budget,
+        budget_id: this.props.budget_id
+
+      }
+      APICalls.updateExactUrl(this.props.category.url, category)
+        .then(cat => {
+          this.setState({
+            category: cat,
+            edit: false
+          })
+          this.props.get()
+          this.props.toggle()
+        })
     } else {
       const category = {
         amount: this.state.amount,

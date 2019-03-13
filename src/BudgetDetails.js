@@ -184,7 +184,7 @@ class BudgetDetails extends Component {
       <div className="">
         <ListGroup className="">
           {this.state.categories.map(cat => {
-            return <CategoryCard category={cat} key={cat.id} get={this.get} />
+            return <CategoryCard category={cat} key={cat.id} get={this.get} api={this.props.api}/>
           })}
 
 
