@@ -37,7 +37,7 @@ class BudgetMain extends Component {
   }
 
   archiveClick() {
-    this.setState(({ archived }) => ({ archived: !archived }), () => this.getBudgets)
+    this.setState(({ archived }) => ({ archived: !archived }), () => this.getBudgets())
   }
 
   toggle = () => {
