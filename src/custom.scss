@@ -3,23 +3,33 @@
 }
 
 .body{
-  background-color: #FAFAF9 !important;
+  background-color: #C0C0C0 !important;
 };
 
 .nav{
-  background-color: #b779b4
+  background-color: #D9e021
 };
 
-// .card{
-//   background-color: #7575a32f !important
-// };
+.card{
+  background-color: #ffffff!important
+};
 
 .scroll{
   overflow-y: scroll;
 };
 
+.img{
+
+  max-height: 7vh;
+
+};
+
+.expense{
+  max-height: 5vh;
+};
+
 $theme-colors: (
-  primary: #a0bda4,
+  primary: #0DB14B,
   info: #b779b4,
   success: #65b369,
   warning: #e3a331,

@@ -71,7 +71,7 @@ class CategoryCard extends Component {
   render() {
     return (
       <ListGroupItem >
-        <div className="d-flex justify-content-around">
+        <div className="d-flex justify-content-around" >
           <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
         </div>
         <div className="d-flex justify-content-around">

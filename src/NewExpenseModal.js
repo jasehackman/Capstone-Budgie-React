@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import AddExpense from './AddExpense'
 import PropTypes from 'prop-types'
 
@@ -20,7 +20,7 @@ class NewExpenseModal extends Component {
           </ModalFooter>
         </Modal>
       </div>
-    );
+    )
   }
 }
 

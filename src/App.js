@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   authenticated() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       return <div className="App">
         <NavBar api={this.state.api} apiRefresh={this.apiRefresh} />
         <div className="container">
