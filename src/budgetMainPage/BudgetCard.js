@@ -13,10 +13,14 @@ class BudgetMain extends Component {
       <div className="col-4 mb-4 mt-4">
         <Link to={`/budget/${this.props.budget.id}`} className="link-style">
           <div className="body card p-3 shadow">
-            <h4 className="card-title">{this.props.budget.name}</h4>
-            <p>Budget Amount: {this.props.budget.amount}</p>
-            <p>Amount Spent: {this.props.budget.spent}</p>
-            <p>Amount Remaining: {this.props.budget.remaining}</p>
+            <div className="d-flex justify-content-center">
+              <h4 className="card-title">{this.props.budget.name}</h4>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p>{this.props.budget.spent}</p>
+              <p>Remaining:{this.props.budget.amount}</p>
+              <p>{this.props.budget.remaining}</p>
+            </div>
             <Progress value={this.props.budget.percent} />
           </div>
         </Link>

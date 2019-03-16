@@ -71,17 +71,19 @@ class CategoryCard extends Component {
   render() {
     return (
       <ListGroupItem className="mt-3">
-        <div className="d-flex justify-content-around" >
-          <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
+        <div className=' relative'>
+          <div className="d-flex justify-content-around" >
+            <Link className="link-style" to={`/category/${this.state.category.id}`}><h5 className="underline">{this.state.category.name}</h5></Link>
+          </div>
+          <div className="right">
+            <i className="fas fa-pencil-alt m-1" onClick={() => this.editToggle()} />
+            <i className="fas fa-trash-alt m-1" onClick={() => { this.deleteCategory() }} />
+          </div>
         </div>
-        <div>
-          <i className="fas fa-trash-alt m-1" onClick={() => { this.deleteCategory() }} />
-          <i className="fas fa-pencil-alt m-1" onClick={() => this.editToggle()} />
-        </div>
-        <div className="d-flex justify-content-around">
-          <p>Amount: {this.state.category.amount}</p>
-          <p>Spent: {this.state.category.spent}</p>
+        <div className="d-flex justify-content-between">
+          <p>${this.state.category.spent}</p>
           <p>Remaining: {this.state.category.remaining}</p>
+          <p>${this.state.category.amount}</p>
         </div>
 
         <Progress value={this.state.category.percent} />

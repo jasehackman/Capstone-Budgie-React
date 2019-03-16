@@ -52,12 +52,12 @@ class BudgetMain extends Component {
 
         <div className="">
           <div className="row card m-3 pt-4 pb-4" >
-            <div className="col d-flex justify-content-center">
+            <div className="col d-flex justify-content-between">
               <div>
-                <button className=" btn btn-primary" onClick={this.toggle}>Add Budget</button>
+                <button className=" btn btn-primary" onClick={this.toggle}>+ Budget</button>
               </div>
-              <div className="mx-auto col">
-                <h1 className="mx-auto">Budgets</h1>
+              <div className="mx-auto ">
+                <h1 className="">Budgets</h1>
               </div>
               <div className="custom-control custom-switch">
                 <input type="checkbox" className="custom-control-input" id="archived" onChange={() => this.archiveClick()} />

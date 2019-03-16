@@ -138,28 +138,28 @@ class BudgetDetails extends Component {
 
     budgetDetails = <div className="container ">
       <div className="card p-4">
-        <div className="d-flex justify-content-between">
-          <div className="">
+        <div className="relative">
+          <div className="left">
             <button className="btn btn-primary" onClick={this.toggle}>+ Category</button>
           </div>
           <div className="d-flex justify-content-around">
             <h1>{this.state.budget.name}</h1>
           </div>
-          <div className="">
+          <div className="right">
             <i className="fas fa-pencil-alt m-1" onClick={() => this.setState({ edit: true })} />
             <i className="fas fa-trash-alt m-1" onClick={() => this.deleteBudget()} />
           </div>
         </div>
         {/* Switch */}
-        <div className="custom-control custom-switch">
+        <div className="custom-control custom-switch mb-3">
           <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={() => this.archiveBudget()} />
           <label className="custom-control-label" htmlFor="archived">Archive</label>
         </div>
         <div className="d-flex justify-content-between">
 
-          <h4 className="border border-primary rounded-pill p-1 fill">{this.state.budget.spent}</h4>
-          <h4>Amount Remaining: {this.state.budget.remaining}</h4>
-          <h4 className="border border-primary rounded-pill p-1 fill">{this.state.budget.amount}</h4>
+          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.spent}</h4>
+          <h4>Amount Remaining: ${this.state.budget.remaining}</h4>
+          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.amount}</h4>
 
         </div>
 
