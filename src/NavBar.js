@@ -26,7 +26,7 @@ class NavBar extends Component {
     return (
       <div className="nav d-flex justify-content-between">
         <Link to='/'>
-          <img className="img m-2" src='img/budgiefinalvector.png' />
+          <img className="img m-2" src='img/budgie-small.png' />
         </Link>
         <div className="d-flex m-2">
           <button className="btn btn-primary expense mr-2" onClick={this.toggle}>Add Expense</button>

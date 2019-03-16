@@ -17,12 +17,12 @@ class AppManager extends Component {
 
         })} />
 
-        <Route path="/budget/:budgetId(\d)" render={(props => {
+        <Route path="/budget/:budgetId(\d+)" render={(props => {
           return <BudgetDetails {...props} api={this.props.api} />
 
         })} />
 
-        <Route path="/category/:categoryId(\d)" render={(props => {
+        <Route path="/category/:categoryId(\d+)" render={(props => {
           return <CategoryExpensePage {...props} api={this.props.api} />
 
         })} />

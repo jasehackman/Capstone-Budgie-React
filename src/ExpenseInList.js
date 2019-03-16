@@ -62,40 +62,33 @@ class ExpenseInList extends Component {
 
   render() {
 
-    // if (this.state.edit === false) {
     return (
-      <div>
-        <h4>{this.state.editExpense.name}</h4>
-        <p>{this.state.editExpense.amount}</p>
-        <p>{this.state.editExpense.date}</p>
-        <p>{this.state.editExpense.notes}</p>
-        <button onClick={() => { this.deleteExpense() }}>Delete</button>
-        <button onClick={() => this.editToggle()}>Edit</button>
-        <NewItemModal toggle={this.editToggle} modal={this.state.edit} form={<AddExpense toggle={this.editToggle} api={this.props.api} apiRefresh={this.props.getExpenses} expense={this.props.expense}/>} />
+      <li className='list-group-item'>
+        <div className='row'>
+          <div className='col'>
+            <h4>{this.state.editExpense.name}</h4>
+          </div>
+          <div className='col'>
+            <p>{this.state.editExpense.amount}</p>
+          </div>
+          <div className='col'>
+            <p>{this.state.editExpense.date}</p>
+          </div>
+          <div className='col'>
+            <p>{this.state.editExpense.notes}</p>
+          </div>
+          <div className='col'>
+            <i className="fas fa-trash-alt m-1" onClick={() => { this.deleteExpense() }}/>
+            <i className="fas fa-pencil-alt m-1" onClick={() => this.editToggle()}/>
+          </div>
+        </div>
+        <NewItemModal toggle={this.editToggle} modal={this.state.edit} form={<AddExpense toggle={this.editToggle} api={this.props.api} apiRefresh={this.props.getExpenses} expense={this.props.expense} />} />
 
-      </div>
+      </li>
 
 
     )
-    // }
-    // if (this.state.edit === true) {
-    //   return (
-    //     <div>
-    //       <label>Expense Name</label>
-    //       <input type="text" id='editName' defaultValue={this.state.editExpense.name} onChange={(e) => this.handleFieldChange(e)} />
-    //       <label>Amount</label>
-    //       <input type='number' id='editAmount' defaultValue={this.state.editExpense.amount} onChange={(e) => this.handleFieldChange(e)} />
-    //       <label>Date</label>
-    //       <input type='date' id='editDate' defaultValue={this.state.editExpense.date} onChange={(e) => this.handleFieldChange(e)} />
-    //       <label>Notes</label>
-    //       <input type='textfield' id='editNotes' defaultValue={this.state.editExpense.notes} onChange={(e) => this.handleFieldChange(e)} />
-    //       <button onClick={() => this.editExpense()}>Save Expense</button>
-    //       <button onClick={() => this.setState({ edit: false })}>Back</button>
-    //     </div>
 
-
-    //   )
-    // }
 
   }
 }

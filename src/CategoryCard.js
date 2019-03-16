@@ -70,9 +70,13 @@ class CategoryCard extends Component {
 
   render() {
     return (
-      <ListGroupItem >
+      <ListGroupItem className="mt-3">
         <div className="d-flex justify-content-around" >
           <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
+        </div>
+        <div>
+          <i className="fas fa-trash-alt m-1" onClick={() => { this.deleteCategory() }} />
+          <i className="fas fa-pencil-alt m-1" onClick={() => this.editToggle()} />
         </div>
         <div className="d-flex justify-content-around">
           <p>Amount: {this.state.category.amount}</p>
@@ -81,8 +85,6 @@ class CategoryCard extends Component {
         </div>
 
         <Progress value={this.state.category.percent} />
-        <button onClick={() => { this.deleteCategory() }}>Delete</button>
-        <button onClick={() => this.editToggle()}>Edit</button>
         <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={
           <CategoryForm
             toggle={this.editToggle} category={this.state.category} get={this.getCategory}

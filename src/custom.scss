@@ -3,7 +3,7 @@
 }
 
 .body{
-  background-color: #C0C0C0 !important;
+  background-color: #616264 !important;
 };
 
 .nav{
@@ -20,8 +20,22 @@
 
 .img{
 
-  max-height: 7vh;
 
+  min-width: 166px;
+
+};
+
+// .border{
+//   border: 2em, solid, black;
+// };
+
+// .test-size{
+//   min-width: 10vw;
+//   min-height: 10vw;
+// };
+
+.page{
+  background-color: #ffffff!important;
 };
 
 .expense{

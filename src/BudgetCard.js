@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom"
-import { Progress } from 'reactstrap';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { Progress } from 'reactstrap'
+import PropTypes from 'prop-types'
+
 
 class BudgetMain extends Component {
 
@@ -19,8 +21,13 @@ class BudgetMain extends Component {
           </div>
         </Link>
       </div>
-    );
+    )
   }
 }
 
-export default BudgetMain;
+export default BudgetMain
+
+
+BudgetMain.propTypes = {
+  budget: PropTypes.object,
+}

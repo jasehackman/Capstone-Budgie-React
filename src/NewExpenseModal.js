@@ -27,5 +27,5 @@ class NewExpenseModal extends Component {
 export default NewExpenseModal
 
 NewExpenseModal.propTypes = {
- modal: PropTypes.bool
+  modal: PropTypes.bool
 }

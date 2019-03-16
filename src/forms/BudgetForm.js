@@ -22,6 +22,8 @@ class BudgetForm extends Component {
         id: budget.id
       }
       this.setState(stateBudget)
+    }else{
+      this.setState({user: this.props.user})
     }
   }
 
@@ -45,6 +47,7 @@ class BudgetForm extends Component {
         name: this.state.budgetName,
         user: `${this.state.user}${localStorage.getItem('id')}/`
       }
+      console.log(budget)
       APICalls.post(this.props.url, budget)
         .then(() => {
           this.props.get()
