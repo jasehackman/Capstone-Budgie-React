@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from "react-router-dom"
-import BudgetMain from './BudgetMain.js'
-import BudgetDetails from './BudgetDetails.js'
-import CategoryExpensePage from './CategoryExpensePage.js'
-import AddExpense from './AddExpense.js';
+import React, { Component } from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import BudgetMain from './budgetMainPage/BudgetMain.js'
+import BudgetDetails from './budgetDetailsPage/BudgetDetails.js'
+import CategoryExpensePage from './categoryExpensesPage/CategoryExpensePage.js'
+import AddExpense from './AddExpense.js'
 
 
 class AppManager extends Component {

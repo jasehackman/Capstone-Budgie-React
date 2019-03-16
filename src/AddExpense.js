@@ -55,7 +55,8 @@ class AddExpense extends Component {
   }
 
   categoryDefault() {
-    if (this.props.expense !== undefined) {
+    if (this.props.expense) {
+      console.log("top if")
       return APICalls.getOne(this.props.api.categories, this.state.categoryChoice)
         .then(category => {
           this.setState({ categoryDefault: <option value={this.state.categoryChoice}>{category.name}</option> })
@@ -66,10 +67,12 @@ class AddExpense extends Component {
         })
     }
     else {
-      this.setState({ categoryDefault: <option value="0">Default</option> })
+      console.log("bottom if")
+      this.setState({ categoryDefault: <option value="0">Default</option> }, ()=> this.state.categoryDefault)
       this.setState({
         budgetDefault: <option value="0">Default</option>
       })
+
     }
   }
 
@@ -89,7 +92,7 @@ class AddExpense extends Component {
         <FormGroup>
           <Label>Pick Which Category</Label>
           <Input type="select" id="categoryChoice" onChange={(e) => this.handleFieldChange(e)}>
-            {this.state.categoryDefualt}
+            {this.state.categoryDefault}
             {this.state.categories.map(category => {
               return <option key={category.id} value={category.id}>{category.name}</option>
             })}

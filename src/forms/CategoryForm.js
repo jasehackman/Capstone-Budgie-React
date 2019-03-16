@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import APICalls from '../modules/APICalls.js'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import PropTypes from 'prop-types'
 
 class CategoryForm extends Component {
@@ -14,7 +14,6 @@ class CategoryForm extends Component {
 
   componentDidMount() {
     if (this.props.category) {
-      console.log(this.props.category)
       let category = {
         name: this.props.category.name,
         amount: this.props.category.amount,

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 import { Progress } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import APICalls from './modules/APICalls.js'
+import { ListGroupItem } from 'reactstrap'
+import APICalls from '../modules/APICalls.js'
 import PropTypes from 'prop-types'
-import NewItemModal from './NewItemModal.js'
-import CategoryForm from './forms/CategoryForm.js';
+import NewItemModal from '../NewItemModal.js'
+import CategoryForm from '../forms/CategoryForm.js'
 
 
 

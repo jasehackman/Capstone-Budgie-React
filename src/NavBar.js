@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import NewExpenseModal from './NewExpenseModal'
+import PropTypes from 'prop-types'
+
 
 
 class NavBar extends Component {
@@ -39,3 +41,7 @@ class NavBar extends Component {
 }
 
 export default NavBar
+
+NavBar.propTypes = {
+  api: PropTypes.object,
+}

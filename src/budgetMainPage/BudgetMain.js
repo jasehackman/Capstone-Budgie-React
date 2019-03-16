@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import BudgetCard from './BudgetCard.js'
-import APICalls from './modules/APICalls.js'
-import NewItemModal from './NewItemModal.js'
+import APICalls from '../modules/APICalls.js'
+import NewItemModal from '../NewItemModal.js'
 import PropTypes from 'prop-types'
-import BudgetForm from './forms/BudgetForm.js'
+import BudgetForm from '../forms/BudgetForm.js'
 
 
 class BudgetMain extends Component {

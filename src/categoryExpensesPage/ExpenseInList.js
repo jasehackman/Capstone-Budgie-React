@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import APICalls from './modules/APICalls.js'
-import AddExpense from './AddExpense.js'
-import NewItemModal from './NewItemModal.js'
+import APICalls from '../modules/APICalls.js'
+import AddExpense from '../AddExpense.js'
+import NewItemModal from '../NewItemModal.js'
 import PropTypes from 'prop-types'
 
 

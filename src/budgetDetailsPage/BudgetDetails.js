@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import CategoryCard from './CategoryCard.js'
-import { Route, Redirect } from "react-router-dom"
 import { Progress } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import APICalls from './modules/APICalls.js'
-import NewItemModal from './NewItemModal.js'
-import BudgetForm from './forms/BudgetForm.js'
-import CategoryForm from './forms/CategoryForm.js'
+import { ListGroup } from 'reactstrap'
+import APICalls from '../modules/APICalls.js'
+import NewItemModal from '../NewItemModal.js'
+import BudgetForm from '../forms/BudgetForm.js'
+import CategoryForm from '../forms/CategoryForm.js'
 import PropTypes from 'prop-types'
 
 
@@ -33,7 +32,6 @@ class BudgetDetails extends Component {
   }
 
   componentDidMount() {
-    console.log("did i mount?")
     let newState = {}
     APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
       .then(budget => {
@@ -147,7 +145,7 @@ class BudgetDetails extends Component {
           <div className="d-flex justify-content-around">
             <h1>{this.state.budget.name}</h1>
           </div>
-          <div className="border test-size">
+          <div className="">
             <i className="fas fa-pencil-alt m-1" onClick={() => this.setState({ edit: true })} />
             <i className="fas fa-trash-alt m-1" onClick={() => this.deleteBudget()} />
           </div>
@@ -157,10 +155,11 @@ class BudgetDetails extends Component {
           <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={() => this.archiveBudget()} />
           <label className="custom-control-label" htmlFor="archived">Archive</label>
         </div>
-        <div className="d-flex justify-content-around">
-          <h4>Amount Spent: {this.state.budget.spent}</h4>
+        <div className="d-flex justify-content-between">
+
+          <h4 className="border border-primary rounded-pill p-1 fill">{this.state.budget.spent}</h4>
           <h4>Amount Remaining: {this.state.budget.remaining}</h4>
-          <h4>Total Budget: {this.state.budget.amount}</h4>
+          <h4 className="border border-primary rounded-pill p-1 fill">{this.state.budget.amount}</h4>
 
         </div>
 
