@@ -81,9 +81,9 @@ class CategoryCard extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-between">
-          <p>${this.state.category.spent}</p>
+          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.spent}</p>
           <p>Remaining: {this.state.category.remaining}</p>
-          <p>${this.state.category.amount}</p>
+          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.amount}</p>
         </div>
 
         <Progress value={this.state.category.percent} />

@@ -56,7 +56,7 @@ class CategoryExpensePage extends Component {
                 <h6>Notes</h6>
               </div>
               <div className='col'>
-                <h6>Del/Edit</h6>
+                <h6>Delete/Edit</h6>
               </div>
             </div>
           </li>

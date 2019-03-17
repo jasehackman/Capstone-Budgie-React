@@ -9,7 +9,7 @@ class NewItemModal extends Component {
     return (
       <div>
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} >
-          <ModalHeader toggle={this.props.toggle}>Add Expense</ModalHeader>
+          <ModalHeader toggle={this.props.toggle}></ModalHeader>
           <ModalBody>
             {this.props.form}
           </ModalBody>
