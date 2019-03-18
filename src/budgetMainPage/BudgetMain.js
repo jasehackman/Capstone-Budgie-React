@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import BudgetCard from './BudgetCard.js'
-import APICalls from './modules/APICalls.js'
-import NewItemModal from './NewItemModal.js'
+import APICalls from '../modules/APICalls.js'
+import NewItemModal from '../NewItemModal.js'
 import PropTypes from 'prop-types'
-import BudgetForm from './forms/BudgetForm.js'
+import BudgetForm from '../forms/BudgetForm.js'
 
 
 class BudgetMain extends Component {
@@ -51,18 +51,22 @@ class BudgetMain extends Component {
       return (
 
         <div className="">
-          <div className="row">
-            <div className="mx-auto col">
-              <h1 className="mx-auto">Budgets</h1>
-            </div>
-            <div className="custom-control custom-switch">
-              <input type="checkbox" className="custom-control-input" id="archived" onChange={() => this.archiveClick()} />
-              <label className="custom-control-label" htmlFor="archived">Show Archived</label>
+          <div className="row card m-3 pt-4 pb-4" >
+            <div className="col d-flex justify-content-between">
+              <div>
+                <button className=" btn btn-primary" onClick={this.toggle}>+ Budget</button>
+              </div>
+              <div className="mx-auto ">
+                <h1 className="">Budgets</h1>
+              </div>
+              <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" id="archived" onChange={() => this.archiveClick()} />
+                <label className="custom-control-label" htmlFor="archived">Show Archived</label>
+              </div>
             </div>
 
           </div>
-          <button className="btn-primary" onClick={this.toggle}>Add Budget</button>
-          <NewItemModal modal={this.state.modal} toggle={this.toggle} get={this.getBudgets} form={<BudgetForm get={this.getBudgets} url={this.props.api.budgets} toggle={this.toggle} user={this.props.api.users}/>} />
+          <NewItemModal modal={this.state.modal} toggle={this.toggle} get={this.getBudgets} form={<BudgetForm get={this.getBudgets} url={this.props.api.budgets} toggle={this.toggle} user={this.props.api.users} />} />
           <div className="container">
             <div className="row">
               {this.state.budgets.map(budget => {

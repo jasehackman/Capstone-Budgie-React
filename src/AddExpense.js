@@ -38,7 +38,6 @@ class AddExpense extends Component {
         expenseNote: this.props.expense.notes,
         categoryChoice: this.props.expense.category_id
       }
-      console.log(expense)
       this.setState(expense, () => {
         this.categoryDefault()
         this.getBudgetCategories(this.state.categoryChoice)
@@ -46,7 +45,6 @@ class AddExpense extends Component {
       APICalls.get(this.props.api.budgets)
         .then(budgets => this.setState({ budgets }))
 
-      console.log("here")
     } else {
       APICalls.get(this.props.api.budgets)
         .then(budgets => {
@@ -57,9 +55,8 @@ class AddExpense extends Component {
   }
 
   categoryDefault() {
-    console.log("In the function")
-    if (this.props.expense !== undefined) {
-      console.log("top")
+    if (this.props.expense) {
+      console.log("top if")
       return APICalls.getOne(this.props.api.categories, this.state.categoryChoice)
         .then(category => {
           this.setState({ categoryDefault: <option value={this.state.categoryChoice}>{category.name}</option> })
@@ -70,11 +67,12 @@ class AddExpense extends Component {
         })
     }
     else {
-      console.log("bottom")
-      this.setState({ categoryDefault: <option value="0">Default</option> })
+      console.log("bottom if")
+      this.setState({ categoryDefault: <option value="0">Default</option> }, ()=> this.state.categoryDefault)
       this.setState({
         budgetDefault: <option value="0">Default</option>
       })
+
     }
   }
 
@@ -82,7 +80,6 @@ class AddExpense extends Component {
     if (id === '0') {
       return
     }
-    console.log("i'm here")
     APICalls.getWithQuery(this.props.api.categories, 'budget_id', id)
       .then(categories => this.setState({ categories }))
   }
@@ -95,7 +92,7 @@ class AddExpense extends Component {
         <FormGroup>
           <Label>Pick Which Category</Label>
           <Input type="select" id="categoryChoice" onChange={(e) => this.handleFieldChange(e)}>
-            {this.state.categoryDefualt}
+            {this.state.categoryDefault}
             {this.state.categories.map(category => {
               return <option key={category.id} value={category.id}>{category.name}</option>
             })}
@@ -129,7 +126,6 @@ class AddExpense extends Component {
         category_id: this.state.categoryChoice,
         category: `${this.props.api.categories}${this.state.categoryChoice}`
       }
-      console.log(this.props.api.expenses)
       APICalls.update(this.props.api.expenses, this.props.expense.id, expense)
         .then(() => {
           this.props.toggle()
@@ -146,7 +142,6 @@ class AddExpense extends Component {
         category_id: this.state.categoryChoice,
         category: `${this.props.api.categories}${this.state.categoryChoice}`
       }
-      console.log("expense", expense)
 
       APICalls.post(this.props.api.expenses, expense)
         .then(() => {

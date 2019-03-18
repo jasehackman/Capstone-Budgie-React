@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import NavBar from './NavBar.js'
 import AppRouter from './AppRouter.js'
 import Login from './Login.js'
@@ -30,10 +30,10 @@ class App extends Component {
   }
 
   authenticated() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       return <div className="App">
         <NavBar api={this.state.api} apiRefresh={this.apiRefresh} />
-        <div className="container">
+        <div className="container mt-4">
           <AppRouter api={this.state.api} />
         </div>
       </div>
@@ -59,4 +59,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

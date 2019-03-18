@@ -22,6 +22,8 @@ class BudgetForm extends Component {
         id: budget.id
       }
       this.setState(stateBudget)
+    } else {
+      this.setState({ user: this.props.user })
     }
   }
 
@@ -45,6 +47,7 @@ class BudgetForm extends Component {
         name: this.state.budgetName,
         user: `${this.state.user}${localStorage.getItem('id')}/`
       }
+      console.log(budget)
       APICalls.post(this.props.url, budget)
         .then(() => {
           this.props.get()
@@ -67,12 +70,12 @@ class BudgetForm extends Component {
       <Form>
         <FormGroup>
           <Label>Budget Name</Label>
-          <Input type="text" id="budgetName" defaultValue={this.state.budgetName} onChange={(e) => this.handleFieldChange(e)}/>
+          <Input type="text" id="budgetName" defaultValue={this.state.budgetName} onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <FormGroup>
           <Label>Budget Amount</Label>
-          <Input type="text" id="budgetAmount" defaultValue={this.state.budgetAmount} onChange={(e) => this.handleFieldChange(e)}/>
+          <Input type="text" id="budgetAmount" defaultValue={this.state.budgetAmount} onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
         <FormGroup>

@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import CategoryCard from './CategoryCard.js'
-import { Route, Redirect } from "react-router-dom"
 import { Progress } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import APICalls from './modules/APICalls.js'
-import NewItemModal from './NewItemModal.js'
-import BudgetForm from './forms/BudgetForm.js'
-import CategoryForm from './forms/CategoryForm.js'
+import { ListGroup } from 'reactstrap'
+import APICalls from '../modules/APICalls.js'
+import NewItemModal from '../NewItemModal.js'
+import BudgetForm from '../forms/BudgetForm.js'
+import CategoryForm from '../forms/CategoryForm.js'
 import PropTypes from 'prop-types'
 
 
@@ -132,59 +131,50 @@ class BudgetDetails extends Component {
 
   render() {
 
-    let categoryForm = (<div>
-      <label>Category Name</label>
-      <input type="text" id="newCategoryName" onChange={e => this.handleFieldChange(e)} />
-      <label>Category Amount</label>
-      <input type="number" id='newCategoryAmount' onChange={e => this.handleFieldChange(e)} />
-      <button onClick={() => this.addCategory()}>Add Category</button>
-    </div>)
 
     // budgets Details
     let budgetDetails
 
-    let budgetEditForm = (<div>
-      <label>Budget Name</label>
-      <input type="text" id="editBudgetName" defaultValue={this.state.editBudgetName} onChange={e => this.handleFieldChange(e)} />
-      <label>Budget Amount</label>
-      <input type="number" id='editBudgetAmount' defaultValue={this.state.editBudgetAmount} onChange={e => this.handleFieldChange(e)} />
-      <button onClick={() => this.editBudget()}>Edit Budget</button>
-      <button onClick={() => this.editToggle()}>Back</button>
-    </div>)
 
+    budgetDetails = <div className="container ">
+      <div className="card p-4">
+        <div className="relative">
+          <div className="left">
+            <button className="btn btn-primary" onClick={this.toggle}>+ Category</button>
+          </div>
+          <div className="d-flex justify-content-around">
+            <h1>{this.state.budget.name}</h1>
+          </div>
+          <div className="right">
+            <i className="fas fa-pencil-alt m-1" onClick={() => this.setState({ edit: true })} />
+            <i className="fas fa-trash-alt m-1" onClick={() => this.deleteBudget()} />
+          </div>
+        </div>
+        {/* Switch */}
+        <div className="custom-control custom-switch mb-3">
+          <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={() => this.archiveBudget()} />
+          <label className="custom-control-label" htmlFor="archived">Archive</label>
+        </div>
+        <div className="d-flex justify-content-between">
 
+          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.spent}</h4>
+          <h4>Amount Remaining: ${this.state.budget.remaining}</h4>
+          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.amount}</h4>
 
+        </div>
 
+        <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBudget} url={this.props.api.budgets} />} />
 
-    budgetDetails = <div className="container">
-      <div className="d-flex justify-content-around">
-        <h1>{this.state.budget.name}</h1>
+        <Progress value={this.state.budget.percent} />
+
       </div>
-      {/* Switch */}
-      <div className="custom-control custom-switch">
-        <input type="checkbox" className="custom-control-input" id="archived" checked={this.state.archived} onChange={() => this.archiveBudget()} />
-        <label className="custom-control-label" htmlFor="archived">Archive</label>
-      </div>
-      <div className="d-flex justify-content-around">
-        <h4>Amount Spent: {this.state.budget.spent}</h4>
-        <h4>Amount Remaining: {this.state.budget.remaining}</h4>
-        <h4>Total Budget: {this.state.budget.amount}</h4>
-
-      </div>
-      <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBudget} url={this.props.api.budgets}/>} />
-
-      <Progress value={this.state.budget.percent} />
-      <button onClick={() => this.setState({ edit: true })}>Edit</button>
-      <button onClick={() => this.deleteBudget()}>Delete</button>
-
-      <button className="btn-primary" onClick={this.toggle}>Add Category</button>
 
       {/* Category Modal */}
-      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.get} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId}/>} />
+      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.get} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId} />} />
       <div className="">
         <ListGroup className="">
           {this.state.categories.map(cat => {
-            return <CategoryCard category={cat} key={cat.id} get={this.get} api={this.props.api}/>
+            return <CategoryCard category={cat} key={cat.id} get={this.get} api={this.props.api} />
           })}
 
 

@@ -1,25 +1,65 @@
 .link-style {
   text-decoration: none !important;
+  color: black !important;
 }
 
 .body{
-  background-color: #FAFAF9 !important;
+  background-color: #616264 !important;
+};
+
+.relative{
+  position: relative;
+};
+
+.right{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+};
+
+.left{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+};
+.underline{
+  text-decoration: underline;
 };
 
 .nav{
-  background-color: #b779b4
+  background-color: #D9e021
 };
 
-// .card{
-//   background-color: #7575a32f !important
-// };
+.card{
+  background-color: #ffffff!important
+};
 
 .scroll{
   overflow-y: scroll;
 };
 
+.img{
+
+
+  min-width: 166px;
+
+};
+
+.fill{
+  background-color: #0DB14B;
+  color: white;
+}
+
+.page{
+  background-color: #ffffff!important;
+};
+
+.expense{
+  max-height: 5vh;
+};
+
 $theme-colors: (
-  primary: #a0bda4,
+  primary: #0DB14B,
   info: #b779b4,
   success: #65b369,
   warning: #e3a331,

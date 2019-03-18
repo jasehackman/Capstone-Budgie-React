@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import NewExpenseModal from './NewExpenseModal'
+import PropTypes from 'prop-types'
+
 
 
 class NavBar extends Component {
@@ -17,21 +19,29 @@ class NavBar extends Component {
   }
 
   logout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-    localStorage.removeItem("id")
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    localStorage.removeItem('id')
   }
 
   render() {
     return (
-      <div className="nav">
-        <Link className="nav-link" to='/'>Budgets</Link>
-        <button className="btn-primary" onClick={this.toggle}>Add Expense</button>
-        <NewExpenseModal modal={this.state.modal} toggle={this.toggle} api={this.props.api} apiRefresh={this.props.apiRefresh} />
-        <Link to='/' onClick={() => this.logout()}>Logout</Link>
+      <div className="nav d-flex justify-content-between">
+        <Link to='/'>
+          <img className="img m-2" src='img/budgie-small.png' />
+        </Link>
+        <div className="d-flex m-2">
+          <button className="btn btn-primary expense mr-2" onClick={this.toggle}>Add Expense</button>
+          <NewExpenseModal modal={this.state.modal} toggle={this.toggle} api={this.props.api} apiRefresh={this.props.apiRefresh} />
+          <Link to='/' onClick={() => this.logout()}>Logout</Link>
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default NavBar;
+export default NavBar
+
+NavBar.propTypes = {
+  api: PropTypes.object,
+}

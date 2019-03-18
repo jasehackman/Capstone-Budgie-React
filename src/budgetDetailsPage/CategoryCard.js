@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 import { Progress } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import APICalls from './modules/APICalls.js'
+import { ListGroupItem } from 'reactstrap'
+import APICalls from '../modules/APICalls.js'
 import PropTypes from 'prop-types'
-import NewItemModal from './NewItemModal.js'
-import CategoryForm from './forms/CategoryForm.js';
+import NewItemModal from '../NewItemModal.js'
+import CategoryForm from '../forms/CategoryForm.js'
 
 
 
@@ -70,19 +70,23 @@ class CategoryCard extends Component {
 
   render() {
     return (
-      <ListGroupItem >
-        <div className="d-flex justify-content-around">
-          <Link to={`/category/${this.state.category.id}`}>{this.state.category.name}</Link>
+      <ListGroupItem className="mt-3">
+        <div className=' relative'>
+          <div className="d-flex justify-content-around" >
+            <Link className="link-style" to={`/category/${this.state.category.id}`}><h5 className="underline">{this.state.category.name}</h5></Link>
+          </div>
+          <div className="right">
+            <i className="fas fa-pencil-alt m-1" onClick={() => this.editToggle()} />
+            <i className="fas fa-trash-alt m-1" onClick={() => { this.deleteCategory() }} />
+          </div>
         </div>
-        <div className="d-flex justify-content-around">
-          <p>Amount: {this.state.category.amount}</p>
-          <p>Spent: {this.state.category.spent}</p>
+        <div className="d-flex justify-content-between">
+          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.spent}</p>
           <p>Remaining: {this.state.category.remaining}</p>
+          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.amount}</p>
         </div>
 
         <Progress value={this.state.category.percent} />
-        <button onClick={() => { this.deleteCategory() }}>Delete</button>
-        <button onClick={() => this.editToggle()}>Edit</button>
         <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={
           <CategoryForm
             toggle={this.editToggle} category={this.state.category} get={this.getCategory}
