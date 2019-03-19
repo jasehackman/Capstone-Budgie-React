@@ -19,6 +19,7 @@ class BudgetDetails extends Component {
     budget: [],
     categories: [],
     loaded: false,
+    budgets: [],
 
     // for new Category
     newCategoryName: '',
@@ -33,46 +34,30 @@ class BudgetDetails extends Component {
 
   }
 
-  // componentDidMount() {
-  //   let newState = {}
-  //   APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
-  //     .then(budget => {
-  //       newState.budget = budget
-  //       newState.editBudgetName = budget.name
-  //       newState.editBudgetAmount = budget.amount
-  //       newState.archived = budget.archived
-  //       APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
-  //         .then(categories => {
-  //           newState.categories = categories
-  //           this.setState(newState, () => this.setState({ loaded: true }))
-
-  //         })
-  //     }
-  //     )
-  // }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      console.log("update")
       this.getBoth()
     }
   }
+  getAllActiveBudgets = () => {
+    // used to update state and re render BudgetList
+    APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
+      .then(budgets => this.setState({ budgets }))
+  }
 
-  get = () => {
+  getCategories = () => {
     APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
       .then(categories => this.setState({ categories }))
   }
 
   getBoth = () => {
-    this.get()
+    // combines gets for when more than one need to be called
+    this.getCategories()
     this.getBudget()
+    this.getAllActiveBudgets()
 
   }
-
-  // getCategory = (catUrl) => {
-  //   APICalls.getOneWithUrl(catUrl)
-  //     .then(category => this.setState({ category }))
-  // }
 
   handleFieldChange = (evt) => {
     const stateToChange = {}
@@ -90,7 +75,7 @@ class BudgetDetails extends Component {
 
     APICalls.post(this.props.api.categories, postCategory)
       .then(() => {
-        this.get()
+        this.getCategories()
         this.toggle()
       })
 
@@ -124,9 +109,7 @@ class BudgetDetails extends Component {
   }
 
   toggle = () => {
-    console.log("modal", this.state.modal)
     if (this.state.modal === true) {
-      console.log("close")
       this.setState(({ modal }) => ({
         modal: !modal,
         loaded: false
@@ -156,7 +139,7 @@ class BudgetDetails extends Component {
     budget.archived = !this.state.archived
     APICalls.update(this.props.api.budgets, this.state.budget.id, budget)
       .then(() => {
-        this.setState({ archived: !this.state.archived })
+        this.setState({ archived: !this.state.archived }, () => this.getBoth())
       })
   }
 
@@ -167,8 +150,6 @@ class BudgetDetails extends Component {
 
     // budgets Details
     let budgetDetails
-
-
     budgetDetails = <div className="container main ">
       <div className="card p-4 ">
         <div className="relative">
@@ -190,20 +171,18 @@ class BudgetDetails extends Component {
         </div>
         <div className="d-flex justify-content-between">
 
-          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.spent}</h4>
+          <h4 className="">${this.state.budget.spent}</h4>
           <h4>Amount Remaining: ${this.state.budget.remaining}</h4>
-          <h4 className="border border-primary rounded-pill p-1 fill">${this.state.budget.amount}</h4>
+          <h4 className=" ">${this.state.budget.amount}</h4>
 
         </div>
 
-        <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBoth} url={this.props.api.budgets} />} />
 
         <Progress value={this.state.budget.percent} />
 
       </div>
 
-      {/* Category Modal */}
-      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.getBoth} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId} />} />
+
       <div className="">
         <ListGroup className="">
           {this.state.categories.map(cat => {
@@ -213,6 +192,10 @@ class BudgetDetails extends Component {
 
         </ListGroup>
       </div>
+      {/* Budget Modal */}
+      <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBoth} url={this.props.api.budgets} />} />
+      {/* Category Modal */}
+      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.getBoth} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId} />} />
 
     </div>
 
@@ -222,7 +205,7 @@ class BudgetDetails extends Component {
       return (
         <div className='d-flex'>
           <div className=' '>
-            <BudgetList budgets={this.props.api.budgets} />
+            <BudgetList budgets={this.props.api.budgets} budget_id={this.props.match.params.budgetId} budgetsArray={this.state.budgets} />
           </div >
           <div className=''>
             {budgetDetails}
@@ -246,6 +229,6 @@ export default BudgetDetails
 BudgetDetails.propTypes = {
   api: PropTypes.object,
   match: PropTypes.object,
-  history: PropTypes.array,
+  history: PropTypes.object,
 
 }

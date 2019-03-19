@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import APICalls from '../modules/APICalls.js'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input} from 'reactstrap'
 import PropTypes from 'prop-types'
 
 class BudgetForm extends Component {
@@ -37,7 +37,7 @@ class BudgetForm extends Component {
         id: this.state.id
       }
       APICalls.update(this.props.url, budget.id, budget)
-        .then(budget => {
+        .then(() => {
           this.props.get()
           this.props.toggle()
         })
@@ -47,7 +47,6 @@ class BudgetForm extends Component {
         name: this.state.budgetName,
         user: `${this.state.user}${localStorage.getItem('id')}/`
       }
-      console.log(budget)
       APICalls.post(this.props.url, budget)
         .then(() => {
           this.props.get()
@@ -79,7 +78,7 @@ class BudgetForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Button onClick={() => this.post()}>Save</Button>
+          <Button color="primary" className="mr-2" onClick={() => this.post()}>Save</Button>
           <Button onClick={() => this.props.toggle()}>Back</Button>
         </FormGroup>
       </Form>
@@ -91,7 +90,7 @@ class BudgetForm extends Component {
 export default BudgetForm
 
 BudgetForm.propTypes = {
-  budget: PropTypes.object,
+  budget: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   toggle: PropTypes.func,
   get: PropTypes.func,
   url: PropTypes.string,

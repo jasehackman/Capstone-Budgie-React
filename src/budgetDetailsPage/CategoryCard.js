@@ -69,10 +69,11 @@ class CategoryCard extends Component {
   }
 
   progress = () =>{
+    //defines color of progress bar
     let progressBar
-    if(this.state.category.percent <= 100){
+    if(this.state.category.percent <= 95){
       progressBar = <Progress value={this.state.category.percent} />
-    }else if(this.state.category.percent <= 105){
+    }else if(this.state.category.percent <= 100){
       progressBar = <Progress color="warning" value={this.state.category.percent} />
     }else if(this.state.category.percent > 105){
       progressBar = <Progress color="danger" value={this.state.category.percent} />
@@ -93,12 +94,11 @@ class CategoryCard extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-between">
-          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.spent}</p>
+          <p className=''>${this.state.category.spent}</p>
           <p>Remaining: {this.state.category.remaining}</p>
-          <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.amount}</p>
+          <p className=''>${this.state.category.amount}</p>
         </div>
 
-        {/* <Progress value={this.state.category.percent} /> */}
         {this.progress()}
         <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={
           <CategoryForm

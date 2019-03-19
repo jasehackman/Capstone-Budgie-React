@@ -6,8 +6,6 @@ import PropTypes from 'prop-types'
 
 class BudgetMain extends Component {
 
-
-
   render() {
     return (
       <div className="col-4 mb-4 mt-4">
