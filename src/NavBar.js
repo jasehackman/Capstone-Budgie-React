@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import NewExpenseModal from './NewExpenseModal'
 import PropTypes from 'prop-types'
+import logo from './images/budgie-small.png'
 
 
 
@@ -25,10 +26,11 @@ class NavBar extends Component {
   }
 
   render() {
+
     return (
       <div className="nav d-flex justify-content-between">
         <Link to='/'>
-          <img className="img m-2" src='img/budgie-small.png' />
+          {<img className="img m-2" src={logo} />}
         </Link>
         <div className="d-flex m-2">
           <button className="btn btn-primary expense mr-2" onClick={this.toggle}>Add Expense</button>

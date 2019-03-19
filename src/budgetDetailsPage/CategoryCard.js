@@ -37,7 +37,7 @@ class CategoryCard extends Component {
 
   getCategory = () => {
     APICalls.getOneWithUrl(this.props.category.url)
-      .then(category => this.setState({ category }))
+      .then(category => this.setState({ category }, ()=>this.props.get()))
   }
 
   editCategory() {
@@ -68,6 +68,18 @@ class CategoryCard extends Component {
     )
   }
 
+  progress = () =>{
+    let progressBar
+    if(this.state.category.percent <= 100){
+      progressBar = <Progress value={this.state.category.percent} />
+    }else if(this.state.category.percent <= 105){
+      progressBar = <Progress color="warning" value={this.state.category.percent} />
+    }else if(this.state.category.percent > 105){
+      progressBar = <Progress color="danger" value={this.state.category.percent} />
+    }
+    return progressBar
+  }
+
   render() {
     return (
       <ListGroupItem className="mt-3">
@@ -86,7 +98,8 @@ class CategoryCard extends Component {
           <p className='fill rounded-pill pl-1 pr-1'>${this.state.category.amount}</p>
         </div>
 
-        <Progress value={this.state.category.percent} />
+        {/* <Progress value={this.state.category.percent} /> */}
+        {this.progress()}
         <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={
           <CategoryForm
             toggle={this.editToggle} category={this.state.category} get={this.getCategory}

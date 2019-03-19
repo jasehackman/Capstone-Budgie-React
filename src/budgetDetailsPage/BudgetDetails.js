@@ -7,6 +7,8 @@ import NewItemModal from '../NewItemModal.js'
 import BudgetForm from '../forms/BudgetForm.js'
 import CategoryForm from '../forms/CategoryForm.js'
 import PropTypes from 'prop-types'
+import BudgetList from './BudgetList.js'
+import BudgetBalancing from './BudgetBalancing.js'
 
 
 
@@ -31,28 +33,46 @@ class BudgetDetails extends Component {
 
   }
 
-  componentDidMount() {
-    let newState = {}
-    APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
-      .then(budget => {
-        newState.budget = budget
-        newState.editBudgetName = budget.name
-        newState.editBudgetAmount = budget.amount
-        newState.archived = budget.archived
-        APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
-          .then(categories => {
-            newState.categories = categories
-            this.setState(newState, () => this.setState({ loaded: true }))
+  // componentDidMount() {
+  //   let newState = {}
+  //   APICalls.getOne(this.props.api.budgets, this.props.match.params.budgetId)
+  //     .then(budget => {
+  //       newState.budget = budget
+  //       newState.editBudgetName = budget.name
+  //       newState.editBudgetAmount = budget.amount
+  //       newState.archived = budget.archived
+  //       APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
+  //         .then(categories => {
+  //           newState.categories = categories
+  //           this.setState(newState, () => this.setState({ loaded: true }))
 
-          })
-      }
-      )
+  //         })
+  //     }
+  //     )
+  // }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      console.log("update")
+      this.getBoth()
+    }
   }
 
   get = () => {
     APICalls.getWithQuery(this.props.api.categories, 'budget_id', this.props.match.params.budgetId)
       .then(categories => this.setState({ categories }))
   }
+
+  getBoth = () => {
+    this.get()
+    this.getBudget()
+
+  }
+
+  // getCategory = (catUrl) => {
+  //   APICalls.getOneWithUrl(catUrl)
+  //     .then(category => this.setState({ category }))
+  // }
 
   handleFieldChange = (evt) => {
     const stateToChange = {}
@@ -84,7 +104,7 @@ class BudgetDetails extends Component {
         newState.editBudgetName = budget.name
         newState.editBudgetAmount = budget.amount
         newState.archived = budget.archived
-        this.setState(newState)
+        this.setState(newState, () => this.setState({ loaded: true }))
       })
   }
 
@@ -104,8 +124,21 @@ class BudgetDetails extends Component {
   }
 
   toggle = () => {
-    this.setState(({ modal }) => ({ modal: !modal })
-    )
+    console.log("modal", this.state.modal)
+    if (this.state.modal === true) {
+      console.log("close")
+      this.setState(({ modal }) => ({
+        modal: !modal,
+        loaded: false
+      })
+      )
+    } else {
+      this.setState(({ modal }) => ({
+        modal: !modal
+      }))
+
+    }
+
   }
 
   editToggle = () => {
@@ -163,18 +196,18 @@ class BudgetDetails extends Component {
 
         </div>
 
-        <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBudget} url={this.props.api.budgets} />} />
+        <NewItemModal modal={this.state.edit} toggle={this.editToggle} form={<BudgetForm toggle={this.editToggle} budget={this.state.budget} get={this.getBoth} url={this.props.api.budgets} />} />
 
         <Progress value={this.state.budget.percent} />
 
       </div>
 
       {/* Category Modal */}
-      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.get} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId} />} />
+      <NewItemModal modal={this.state.modal} toggle={this.toggle} getBudgets={this.getBudgets} form={<CategoryForm toggle={this.toggle} get={this.getBoth} url={this.props.api.categories} budget={`${this.props.api.budgets}${this.props.match.params.budgetId}/`} budget_id={this.props.match.params.budgetId} />} />
       <div className="">
         <ListGroup className="">
           {this.state.categories.map(cat => {
-            return <CategoryCard category={cat} key={cat.id} get={this.get} api={this.props.api} />
+            return <CategoryCard category={cat} key={cat.id} get={this.getBoth} api={this.props.api} />
           })}
 
 
@@ -187,11 +220,22 @@ class BudgetDetails extends Component {
     if (this.state.loaded) {
 
       return (
-        budgetDetails
+        <div className='row'>
+          <div className='col '>
+            <BudgetList budgets={this.props.api.budgets} />
+          </div >
+          <div className='col-8'>
+            {budgetDetails}
+          </div>
+          <div className='col '>
+            <BudgetBalancing api={this.props.api} budget={this.props.match.params.budgetId} budgetObj={this.state.budget} categories={this.state.categories} />
+          </div >
+        </div>
 
       )
     }
     else {
+      this.getBoth()
       return <h1>Loading...</h1>
     }
   }
