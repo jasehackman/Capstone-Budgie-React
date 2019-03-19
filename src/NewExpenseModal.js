@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import AddExpense from './AddExpense'
 import PropTypes from 'prop-types'
 
@@ -14,10 +14,10 @@ class NewExpenseModal extends Component {
           <ModalHeader toggle={this.props.toggle}>Add Expense</ModalHeader>
           <ModalBody>
             <AddExpense api={this.props.api} toggle={this.props.toggle} apiRefresh={this.props.apiRefresh} />
-          </ModalBody>
-          <ModalFooter>
+
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-          </ModalFooter>
+          </ModalBody>
+
         </Modal>
       </div>
     )
@@ -27,5 +27,8 @@ class NewExpenseModal extends Component {
 export default NewExpenseModal
 
 NewExpenseModal.propTypes = {
-  modal: PropTypes.bool
+  modal: PropTypes.bool,
+  api: PropTypes.object,
+  toggle: PropTypes.func,
+  apiRefresh: PropTypes.func
 }

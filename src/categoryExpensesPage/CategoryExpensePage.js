@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ExpenseInList from './ExpenseInList.js'
 import APICalls from '../modules/APICalls.js'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 
 
 class CategoryExpensePage extends Component {
@@ -71,3 +73,8 @@ class CategoryExpensePage extends Component {
 }
 
 export default CategoryExpensePage
+
+CategoryExpensePage.propTypes = {
+  api: PropTypes.object,
+  match: PropTypes.object,
+}

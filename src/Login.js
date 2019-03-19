@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { Route, Redirect, Link } from "react-router-dom"
-import APICalls from './modules/APICalls.js'
-
-
-// TODO: Error handeling. Ask joe how to handle errors
+import React, { Component } from 'react'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
 
@@ -34,14 +30,13 @@ class Login extends Component {
         method: 'POST',
         body: JSON.stringify(creds),
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
       }).then(data => data.json())
         .then(token => {
-          console.log("token", token)
-          localStorage.setItem("user", creds.username)
-          localStorage.setItem("token", token.token)
-          localStorage.setItem("id", token.id)
+          localStorage.setItem('user', creds.username)
+          localStorage.setItem('token', token.token)
+          localStorage.setItem('id', token.id)
           this.setState({ login: true })
         })
     }
@@ -67,15 +62,13 @@ class Login extends Component {
         method: 'POST',
         body: JSON.stringify(creds),
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
       }).then(data => data.json())
         .then(token => {
-          localStorage.setItem("user", creds.username)
-          localStorage.setItem("token", token.token)
+          localStorage.setItem('user', creds.username)
+          localStorage.setItem('token', token.token)
           this.setState({ login: true })
-        }).catch((err) => {
-          console.log("error", err)
         })
     }
   }
@@ -97,7 +90,7 @@ class Login extends Component {
 
   errors() {
     //handles blank fields
-    let er = ""
+    let er = ''
     if (this.state.loginError) {
       er = <p className="alert alert-danger">incorrect email or password</p>
 
@@ -126,7 +119,7 @@ class Login extends Component {
 
           </FormGroup>
 
-          <Button onClick={() => this.login()}>Login</Button>
+          <Button color="primary" className='mr-2' onClick={() => this.login()}>Login</Button>
           <Button onClick={() => this.registerToggle()}>Register</Button>
 
         </Form>
@@ -165,7 +158,7 @@ class Login extends Component {
 
           </FormGroup>
 
-          <Button onClick={() => this.register()}>Register</Button>
+          <Button color="primary" className='mr-2'onClick={() => this.register()}>Register</Button>
           <Button onClick={() => this.registerToggle()}>Login</Button>
 
         </Form>
@@ -181,13 +174,14 @@ class Login extends Component {
 
     } else {
       return (
-
-        <div className="card">
-          {this.whichForm()}
+        <div className='d-flex justify-content-center align-items-center min-vh-100'>
+          <div className="w-50 card p-4">
+            {this.whichForm()}
+          </div>
         </div>
       )
     }
   }
 }
 
-export default Login;
+export default Login

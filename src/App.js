@@ -6,9 +6,6 @@ import APICalls from './modules/APICalls.js'
 
 class App extends Component {
   state = {
-    budgets: [],
-    categories: [],
-    expenses: [],
     api: [],
     loaded: false,
     apiurl: 'http://127.0.0.1:8000/'

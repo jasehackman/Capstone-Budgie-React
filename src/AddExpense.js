@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import APICalls from './modules/APICalls'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import PropTypes from 'prop-types'
-import { debug } from 'util';
-
 
 
 class AddExpense extends Component {
@@ -30,7 +28,6 @@ class AddExpense extends Component {
 
   componentDidMount() {
     if (this.props.expense) {
-      console.log(this.props.expense)
       const expense = {
         expenseName: this.props.expense.name,
         expenseAmount: this.props.expense.amount,
@@ -56,7 +53,6 @@ class AddExpense extends Component {
 
   categoryDefault() {
     if (this.props.expense) {
-      console.log("top if")
       return APICalls.getOne(this.props.api.categories, this.state.categoryChoice)
         .then(category => {
           this.setState({ categoryDefault: <option value={this.state.categoryChoice}>{category.name}</option> })
@@ -67,7 +63,6 @@ class AddExpense extends Component {
         })
     }
     else {
-      console.log("bottom if")
       this.setState({ categoryDefault: <option value="0">Default</option> }, ()=> this.state.categoryDefault)
       this.setState({
         budgetDefault: <option value="0">Default</option>
@@ -152,9 +147,7 @@ class AddExpense extends Component {
     }
   }
 
-  // TODO: if an expense doesn't have a category nothign is going to happen
   // TODO: if they go back and select defult it will break
-  // TODO: Add Form Validation
   addExpenseForms() {
     let form
     if (this.state.categoryChoice != null) {
@@ -179,7 +172,7 @@ class AddExpense extends Component {
           <Input type='textfield' id='expenseNote' defaultValue={this.state.expenseNote} onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
 
-        <button onClick={() => this.addExpense()}>Save</button>
+        <Button color="primary" className="mr-2 mb-2" onClick={() => this.addExpense()}>Save</Button>
 
       </>
     }

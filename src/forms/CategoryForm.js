@@ -79,7 +79,7 @@ class CategoryForm extends Component {
           <Input type='number' id='amount' defaultValue={this.state.amount} onChange={(e) => this.handleFieldChange(e)} />
         </FormGroup>
         <FormGroup>
-          <Button onClick={() => this.post()}>Save</Button>
+          <Button color="primary" className='mr-2' onClick={() => this.post()}>Save</Button>
           <Button onClick={() => this.props.toggle()}>Back</Button>
         </FormGroup>
       </Form>
@@ -96,6 +96,6 @@ CategoryForm.propTypes = {
   get: PropTypes.func,
   url: PropTypes.string,
   budget: PropTypes.string,
-  budget_id: PropTypes.string
+  budget_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 
 }

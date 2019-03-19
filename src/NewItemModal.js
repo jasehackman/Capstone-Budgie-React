@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import PropTypes from 'prop-types'
 
 class NewItemModal extends Component {
@@ -22,8 +22,7 @@ class NewItemModal extends Component {
 export default NewItemModal
 
 NewItemModal.propTypes = {
-  modal: PropTypes.object,
+  modal: PropTypes.bool,
   form: PropTypes.object,
   toggle: PropTypes.func,
-
 }

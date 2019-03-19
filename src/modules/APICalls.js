@@ -6,8 +6,8 @@ class APICalls {
     return fetch(url, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       }
     }).then(data => data.json())
 
@@ -18,8 +18,8 @@ class APICalls {
     return fetch(`${url}${id}`, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       }
     }).then(data => data.json())
   }
@@ -29,8 +29,8 @@ class APICalls {
     return fetch(url, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       }
     }).then(data => data.json())
   }
@@ -40,8 +40,8 @@ class APICalls {
     return fetch(`${url}?${query}=${param}`, {
       method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       }
     }).then(data => data.json())
 
@@ -52,8 +52,8 @@ class APICalls {
     return fetch(url, {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       },
       body: JSON.stringify(data)
 
@@ -65,8 +65,8 @@ class APICalls {
     return fetch(`${url}${id}/`, {
       method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       },
       body: JSON.stringify(data)
 
@@ -77,8 +77,8 @@ class APICalls {
     return fetch(url, {
       method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       },
       body: JSON.stringify(data)
 
@@ -90,8 +90,8 @@ class APICalls {
     return fetch(`${url}${id}/`, {
       method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       },
 
     })
@@ -101,8 +101,8 @@ class APICalls {
     return fetch(url, {
       method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${authKey}`
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${authKey}`
       },
 
     })
