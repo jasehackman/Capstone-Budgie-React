@@ -169,8 +169,8 @@ class BudgetDetails extends Component {
     let budgetDetails
 
 
-    budgetDetails = <div className="container ">
-      <div className="card p-4">
+    budgetDetails = <div className="container main ">
+      <div className="card p-4 ">
         <div className="relative">
           <div className="left">
             <button className="btn btn-primary" onClick={this.toggle}>+ Category</button>
@@ -220,14 +220,14 @@ class BudgetDetails extends Component {
     if (this.state.loaded) {
 
       return (
-        <div className='row'>
-          <div className='col '>
+        <div className='d-flex'>
+          <div className=' '>
             <BudgetList budgets={this.props.api.budgets} />
           </div >
-          <div className='col-8'>
+          <div className=''>
             {budgetDetails}
           </div>
-          <div className='col '>
+          <div className=' '>
             <BudgetBalancing api={this.props.api} budget={this.props.match.params.budgetId} budgetObj={this.state.budget} categories={this.state.categories} />
           </div >
         </div>

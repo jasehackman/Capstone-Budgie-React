@@ -18,7 +18,7 @@ class BudgetBalancing extends Component {
     this.stateSetter()
   }
 
-  stateSetter(){
+  stateSetter() {
     this.setState({
       budget: this.props.budgetObj,
       categories: this.props.categories,
@@ -26,7 +26,7 @@ class BudgetBalancing extends Component {
     })
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
       this.forceUpdate()
     }
@@ -35,38 +35,29 @@ class BudgetBalancing extends Component {
 
   categoryStatus = (props) => {
     let overageList = []
-    props.forEach(category => {
+    overageList = props.map(category => {
       if (category.remaining < 0.00) {
-        overageList.push(category.name)
+        return <div className="card p-2 warn pl-3 pr-3 alert" >
+          <h6 className='card-title bottom'>!Alert!</h6>
+          <p className='card-text'>You have over spent in <strong>{category.name} </strong></p>
+        </div>
       }
     })
-
-    let overage = ''
-    if (overageList.length > 0) {
-      overage = <div className="card p-2 mb-2 warn">
-        <h6>You over spent in:</h6>
-        <ul>
-          {overageList.map(name => {
-            return <li key={name}>{name}</li>
-
-          })}
-        </ul>
-      </div>
-    }
-
-    return overage
+    return overageList
   }
 
   allocation = () => {
     let budgetBal = ''
     if (this.props.budgetObj.to_allocate < 0.00) {
       let dif = this.props.budgetObj.amount - this.props.budgetObj.allocated
-      budgetBal = <div className="card p-2" >
-        <h6>You have put ${-dif} too much in your categories</h6>
+      budgetBal = <div className="card p-2 warn pl-3 pr-3 alert" >
+        <h6 className='card-title bottom'>!Alert!</h6>
+        <p className='card-text'>You have put <strong>${-dif} </strong>too much in your categories</p>
       </div>
-    }else if(this.props.budgetObj.to_allocate > 0.00){
-      budgetBal = <div className="card p-2" >
-        <h6>You have ${this.props.budgetObj.to_allocate} left to budget</h6>
+    } else if (this.props.budgetObj.to_allocate > 0.00) {
+      budgetBal = <div className="card p-2 warn pl-3 pr-3 alert" >
+        <h6 className='card-title'>!Alert!</h6>
+        <p className="card-text">You have <strong>${this.props.budgetObj.to_allocate}</strong> left to budget</p>
       </div>
     }
     return budgetBal
@@ -76,8 +67,8 @@ class BudgetBalancing extends Component {
   render() {
     return (
       <div className="">
-        {this.categoryStatus(this.props.categories)}
         {this.allocation()}
+        {this.categoryStatus(this.props.categories)}
       </div>
     )
 

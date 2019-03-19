@@ -26,7 +26,7 @@ class BudggetList extends Component {
 
 
       return (
-        <div className='card p-2'>
+        <div className='card p-2 alert'>
           <h4>My Budgets</h4>
           <ul className="list-group list-group-flush">
             {this.state.budgets.map(budget => {

@@ -1,10 +1,26 @@
 .link-style {
   text-decoration: none !important;
   color: black !important;
-}
+};
 
 .body{
   background-color: #616264 !important;
+};
+
+.white{
+  color: white !important;
+};
+
+.alert{
+  width: 15rem;
+};
+
+.main{
+  min-width: 40rem;
+}
+
+.bottom{
+  border-bottom: 1.5px solid black;
 };
 
 .relative{
