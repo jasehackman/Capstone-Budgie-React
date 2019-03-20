@@ -2,7 +2,7 @@
 
 <h3>Budgie is a full stack budget application built specifically for one time events. An example would be a budget for your vacation or for remodeling. Budgie's back end is a REST API built with Python, utilizing the Django Rest framework. Budgie's front end is built with JavaScript, leveraging the power of React.js and Bootstrap.</h3>
 
-<h3> This repo contains Budgie's front end.
+<h3> This repo contains Budgie's front end. You can find the API here: https://github.com/jasehackman/Capstone-Budgie-DjangoREST </h3>
 
 <h2 style="font-weight: bold;"> Technologies Used
 <h3>Development Languages and Libraries</h3>
