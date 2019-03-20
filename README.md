@@ -1,4 +1,4 @@
-<h1 style="font-weight: bold">Song-Share</h1>
+<h1 style="font-weight: bold">Budgie</h1>
 
 <h3>Budgie is a full stack budget application built specifically for one time events. An example would be a budget for your vacation or for remodeling. Budgie's back end is a REST API built with Python, utilizing the Django Rest framework. Budgie's front end is built with JavaScript, leveraging the power of React.js and Bootstrap.</h3>
 
