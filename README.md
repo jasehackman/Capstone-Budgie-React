@@ -76,6 +76,3 @@ npm start
 
 <h1 style="text-align:center; font-weight: bold;">Congratulations! You are now experiencing Budgie's React.js Front End!
 
-<h2 style="text-align: center">Entity Relationship Diagrams</h2>
-
-<img src="./public/img/backend.pdf" alt="erd"/>
