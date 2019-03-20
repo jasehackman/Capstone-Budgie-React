@@ -1,68 +1,96 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 style="font-weight: bold">Song-Share</h1>
 
-## Available Scripts
+<h3>Budgie is a full stack budget application built specifically for one time events. An example would be a budget for your vacation or for remodeling. Budgie's back end is a REST API built with Python, utilizing the Django Rest framework. Budgie's front end is built with JavaScript, leveraging the power of React.js and Bootstrap.</h3>
 
-In the project directory, you can run:
+<h2 style="font-weight: bold;"> Technologies Used
+<h3>Development Languages and Libraries</h3>
 
-### `npm start`
+<img src="./public/img/js.jpg"/>______<img src="./public/img/react.png"/>______<img src="./public/img/html5.jpg"/>______<img src="./public/img/css3.jpg"/>______<img src="./public/img/icons8-bootstrap-96.png"/>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h1></h1>
+<h3>Development Tools</h3>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+<img src="./public/img/vs.jpg"/>______<img src="./public/img/lucid.png"/>______<img src="./public/img/github.jpg"/>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h2>Instructions for Installing Song-Share</h2>
 
-### `npm run build`
+<h4> You will need to have command line tools installed for your computer to use terminal commands.
+</h4>
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  * Mac users - Open your terminal and type
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+    ```sh
+    git --version
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  * Linux/Windows users, please vist the [Git page](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and follow the instructions for setup
 
-### `npm run eject`
+<h4>You will now need to configure your git account. In the terminal window, type</h4>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  ```sh
+  git config –global user.name “You Name”
+  git config –global user.email “Your Email”
+  ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Create a new directory to store the files in. Type this into your terminal window.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  ```sh
+  mkdir budgie
+  cd budgie
+  git clone git@github.com:jasehackman/Capstone-Budgie-React.git
+  ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### If you do not have Node.js installed on your machine, visit the [Node.js Download Page](https://nodejs.org/en/download/) and follow the included instructions. To ensure that it is installed correctly, in your terminal window, type
 
-## Learn More
+```sh
+echo $PATH
+```
+  * Ensure that the result has the following in the $PATH
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```sh
+    /usr/local/bin
+    ```
+    or
+    ```sh
+    /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### You will need to go into the lib folder in your  directory and install and build npm modules and also your json-server. In your terminal, type
 
-### Code Splitting
+```sh
+cd budgie/src/lib
+npm init
+npm i
+sudo npm install -g json-server
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+#### From your terminal window, type
 
-### Analyzing the Bundle Size
+```sh
+cd songShare/api
+json-server -p 8088 database.json
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+#### From your terminal window, type Command T, then in the new tab type
 
-### Making a Progressive Web App
+```sh
+cd budgie
+npm start
+```
+#### Now that the server is up and running, you can open an internet browser and access the application:
+```sh
+http://localhost:8080/
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+#### The database can be accessed by entering the following in the url bar.
 
-### Advanced Configuration
+```sh
+http://localhost:8088/
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+<h1 style="text-align:center; font-weight: bold;">Congratulations! You are now experiencing Budgie!
 
-### Deployment
+<h2 style="text-align: center">Entity Relationship Diagrams</h2>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<img src="./src/images/backend.pdf" alt="erd"/>
