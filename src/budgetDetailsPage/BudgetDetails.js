@@ -143,6 +143,18 @@ class BudgetDetails extends Component {
       })
   }
 
+  progress = () =>{
+    //defines color of progress bar
+    let progressBar
+    if(this.state.budget.percent <= 95){
+      progressBar = <Progress value={this.state.budget.percent} />
+    }else if(this.state.budget.percent <= 100){
+      progressBar = <Progress color="warning" value={this.state.budget.percent} />
+    }else if(this.state.budget.percent > 100){
+      progressBar = <Progress color="danger" value={this.state.budget.percent} />
+    }
+    return progressBar
+  }
 
 
   render() {
@@ -178,7 +190,7 @@ class BudgetDetails extends Component {
         </div>
 
 
-        <Progress value={this.state.budget.percent} />
+        {this.progress()}
 
       </div>
 
