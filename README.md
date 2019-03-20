@@ -2,6 +2,8 @@
 
 <h3>Budgie is a full stack budget application built specifically for one time events. An example would be a budget for your vacation or for remodeling. Budgie's back end is a REST API built with Python, utilizing the Django Rest framework. Budgie's front end is built with JavaScript, leveraging the power of React.js and Bootstrap.</h3>
 
+<h3> This repo contains Budgie's front end.
+
 <h2 style="font-weight: bold;"> Technologies Used
 <h3>Development Languages and Libraries</h3>
 
@@ -13,7 +15,7 @@
 <img src="./public/img/vs.jpg"/>______<img src="./public/img/lucid.png"/>______<img src="./public/img/github.jpg"/>
 
 
-<h2>Instructions for Installing Song-Share</h2>
+<h2>Instructions for Installing Budgie</h2>
 
 <h4> You will need to have command line tools installed for your computer to use terminal commands.
 </h4>
@@ -56,20 +58,12 @@ echo $PATH
     /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
     ```
 
-#### You will need to go into the lib folder in your  directory and install and build npm modules and also your json-server. In your terminal, type
+#### You will need to go into the lib folder in your  directory and install and build npm modules. In your terminal, type
 
 ```sh
 cd budgie/src/lib
 npm init
 npm i
-sudo npm install -g json-server
-```
-
-#### From your terminal window, type
-
-```sh
-cd songShare/api
-json-server -p 8088 database.json
 ```
 
 #### From your terminal window, type Command T, then in the new tab type
@@ -78,19 +72,10 @@ json-server -p 8088 database.json
 cd budgie
 npm start
 ```
-#### Now that the server is up and running, you can open an internet browser and access the application:
-```sh
-http://localhost:8080/
-```
 
-#### The database can be accessed by entering the following in the url bar.
 
-```sh
-http://localhost:8088/
-```
-
-<h1 style="text-align:center; font-weight: bold;">Congratulations! You are now experiencing Budgie!
+<h1 style="text-align:center; font-weight: bold;">Congratulations! You are now experiencing Budgie's React.js Front End!
 
 <h2 style="text-align: center">Entity Relationship Diagrams</h2>
 
-<img src="./src/images/backend.pdf" alt="erd"/>
+<img src="./public/img/backend.pdf" alt="erd"/>
