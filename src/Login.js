@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
+import logo from './images/budgieFullVector.svg'
+
 
 class Login extends Component {
 
@@ -158,7 +160,7 @@ class Login extends Component {
 
           </FormGroup>
 
-          <Button color="primary" className='mr-2'onClick={() => this.register()}>Register</Button>
+          <Button color="primary" className='mr-2' onClick={() => this.register()}>Register</Button>
           <Button onClick={() => this.registerToggle()}>Login</Button>
 
         </Form>
@@ -176,6 +178,9 @@ class Login extends Component {
       return (
         <div className='d-flex justify-content-center align-items-center min-vh-100'>
           <div className="w-50 card p-4">
+            <div className="d-flex justify-content-center align-items-centers">
+              <img src={logo} alt="budgie" className="bird " />
+            </div>
             {this.whichForm()}
           </div>
         </div>

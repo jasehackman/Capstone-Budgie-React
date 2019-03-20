@@ -35,10 +35,22 @@ class BudgetBalancing extends Component {
     return budgetBal
   }
 
+  overBudget = () => {
+    let alert = ''
+    if (this.props.budgetObj.remaining <= 0.00) {
+      alert = <div className="card p-2 warn pl-3 pr-3 alert" >
+        <h6 className='card-title bottom'>!Alert!</h6>
+        <p className='card-text'>You are over budget by <strong>${-this.props.budgetObj.remaining}! </strong></p>
+      </div>
+    }
+    return alert
+  }
+
 
   render() {
     return (
       <div className="">
+        {this.overBudget()}
         {this.allocation()}
         {this.categoryStatus(this.props.categories)}
       </div>

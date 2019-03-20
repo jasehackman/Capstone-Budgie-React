@@ -75,7 +75,7 @@ class CategoryCard extends Component {
       progressBar = <Progress value={this.state.category.percent} />
     }else if(this.state.category.percent <= 100){
       progressBar = <Progress color="warning" value={this.state.category.percent} />
-    }else if(this.state.category.percent > 105){
+    }else if(this.state.category.percent > 100){
       progressBar = <Progress color="danger" value={this.state.category.percent} />
     }
     return progressBar
