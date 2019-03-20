@@ -1,68 +1,78 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 style="font-weight: bold">Budgie</h1>
 
-## Available Scripts
+<h3>Budgie is a full stack budget application built specifically for one time events. An example would be a budget for your vacation or for remodeling. Budgie's back end is a REST API built with Python, utilizing the Django Rest framework. Budgie's front end is built with JavaScript, leveraging the power of React.js and Bootstrap.</h3>
 
-In the project directory, you can run:
+<h3> This repo contains Budgie's front end. You can find the API here: https://github.com/jasehackman/Capstone-Budgie-DjangoREST </h3>
 
-### `npm start`
+<h2 style="font-weight: bold;"> Technologies Used
+<h3>Development Languages and Libraries</h3>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="./public/img/js.jpg"/>______<img src="./public/img/react.png"/>______<img src="./public/img/html5.jpg"/>______<img src="./public/img/css3.jpg"/>______<img src="./public/img/icons8-bootstrap-96.png"/>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+<h1></h1>
+<h3>Development Tools</h3>
 
-### `npm test`
+<img src="./public/img/vs.jpg"/>______<img src="./public/img/lucid.png"/>______<img src="./public/img/github.jpg"/>
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+<h2>Instructions for Installing Budgie</h2>
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<h4> You will need to have command line tools installed for your computer to use terminal commands.
+</h4>
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+  * Mac users - Open your terminal and type
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ```sh
+    git --version
+    ```
 
-### `npm run eject`
+  * Linux/Windows users, please vist the [Git page](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and follow the instructions for setup
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<h4>You will now need to configure your git account. In the terminal window, type</h4>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ```sh
+  git config –global user.name “You Name”
+  git config –global user.email “Your Email”
+  ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Create a new directory to store the files in. Type this into your terminal window.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  ```sh
+  mkdir budgie
+  cd budgie
+  git clone git@github.com:jasehackman/Capstone-Budgie-React.git
+  ```
 
-## Learn More
+#### If you do not have Node.js installed on your machine, visit the [Node.js Download Page](https://nodejs.org/en/download/) and follow the included instructions. To ensure that it is installed correctly, in your terminal window, type
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+echo $PATH
+```
+  * Ensure that the result has the following in the $PATH
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```sh
+    /usr/local/bin
+    ```
+    or
+    ```sh
+    /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+    ```
 
-### Code Splitting
+#### You will need to go into the lib folder in your  directory and install and build npm modules. In your terminal, type
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```sh
+cd budgie/src/lib
+npm init
+npm i
+```
 
-### Analyzing the Bundle Size
+#### From your terminal window, type Command T, then in the new tab type
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```sh
+cd budgie
+npm start
+```
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+<h1 style="text-align:center; font-weight: bold;">Congratulations! You are now experiencing Budgie's React.js Front End!
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
