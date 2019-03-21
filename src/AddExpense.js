@@ -42,7 +42,19 @@ class AddExpense extends Component {
       APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
         .then(budgets => this.setState({ budgets }))
 
-    } else {
+    } else if(this.props.category){
+      const category={
+        categoryChoice: this.props.category.id
+      }
+      this.setState(category, () => {
+        this.categoryDefault()
+      })
+      APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
+        .then(budgets => this.setState({ budgets }))
+
+    }
+
+    else {
       APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
         .then(budgets => {
           this.setState({ budgets }, () => this.categoryDefault())
@@ -51,7 +63,7 @@ class AddExpense extends Component {
   }
 
   categoryDefault() {
-    if (this.props.expense) {
+    if (this.props.expense || this.props.category) {
       return APICalls.getOne(this.props.api.categories, this.state.categoryChoice)
         .then(category => {
           this.setState({
@@ -140,7 +152,6 @@ class AddExpense extends Component {
         category_id: this.state.categoryChoice,
         category: `${this.props.api.categories}${this.state.categoryChoice}`
       }
-
       APICalls.post(this.props.api.expenses, expense)
         .then(() => {
           this.props.toggle()

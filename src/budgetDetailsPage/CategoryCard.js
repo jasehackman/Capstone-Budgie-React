@@ -6,6 +6,8 @@ import APICalls from '../modules/APICalls.js'
 import PropTypes from 'prop-types'
 import NewItemModal from '../NewItemModal.js'
 import CategoryForm from '../forms/CategoryForm.js'
+import AddExpense from '../AddExpense.js'
+import NewExpenseModal from '../NewExpenseModal.js'
 
 
 
@@ -17,6 +19,7 @@ class CategoryCard extends Component {
 
     editName: '',
     editAmount: '',
+    expense: false,
 
   }
 
@@ -29,7 +32,7 @@ class CategoryCard extends Component {
     })
   }
 
-  stateSetter(){
+  stateSetter() {
     this.setState({
       category: this.props.category,
       editName: this.props.category.name,
@@ -52,7 +55,7 @@ class CategoryCard extends Component {
 
   getCategory = () => {
     APICalls.getOneWithUrl(this.props.category.url)
-      .then(category => this.setState({ category }, ()=>this.props.get()))
+      .then(category => this.setState({ category }, () => this.props.get()))
   }
 
   editCategory() {
@@ -82,15 +85,19 @@ class CategoryCard extends Component {
     this.setState(({ edit }) => ({ edit: !edit })
     )
   }
+  expenseToggle = () => {
+    this.setState(({ expense }) => ({ expense: !expense })
+    )
+  }
 
-  progress = () =>{
+  progress = () => {
     //defines color of progress bar
     let progressBar
-    if(this.state.category.percent <= 95){
+    if (this.state.category.percent <= 95) {
       progressBar = <Progress value={this.state.category.percent} />
-    }else if(this.state.category.percent <= 100){
+    } else if (this.state.category.percent <= 100) {
       progressBar = <Progress color="warning" value={this.state.category.percent} />
-    }else if(this.state.category.percent > 100){
+    } else if (this.state.category.percent > 100) {
       progressBar = <Progress color="danger" value={this.state.category.percent} />
     }
     return progressBar
@@ -100,6 +107,9 @@ class CategoryCard extends Component {
     return (
       <ListGroupItem className="mt-3">
         <div className=' relative'>
+          <div className="left">
+            <i className="fas fa-plus" onClick={() => this.expenseToggle()}></i>
+          </div>
           <div className="d-flex justify-content-around" >
             <Link className="link-style" to={`/category/${this.state.category.id}`}><h5 className="underline">{this.state.category.name}</h5></Link>
           </div>
@@ -110,7 +120,7 @@ class CategoryCard extends Component {
         </div>
         <div className="d-flex justify-content-between">
           <p className=''>${this.state.category.spent}</p>
-          <p>Remaining: {this.state.category.remaining}</p>
+          <p>Remaining: ${this.state.category.remaining}</p>
           <p className=''>${this.state.category.amount}</p>
         </div>
 
@@ -121,7 +131,10 @@ class CategoryCard extends Component {
             budget={this.props.category.budget} budget_id={this.props.category.budget_id}
             url={this.props.category.url}
           />
+
+
         } />
+        <NewItemModal modal={this.state.expense} toggle={this.expenseToggle} form={<AddExpense api={this.props.api} toggle={this.expenseToggle} apiRefresh={this.props.get} category={this.state.category} />} />
       </ListGroupItem >
 
 
