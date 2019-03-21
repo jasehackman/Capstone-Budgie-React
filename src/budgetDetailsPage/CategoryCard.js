@@ -29,6 +29,21 @@ class CategoryCard extends Component {
     })
   }
 
+  stateSetter(){
+    this.setState({
+      category: this.props.category,
+      editName: this.props.category.name,
+      editAmount: this.props.category.amount
+
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.stateSetter()
+    }
+  }
+
   handleFieldChange = (evt) => {
     const stateToChange = {}
     stateToChange[evt.target.id] = evt.target.value

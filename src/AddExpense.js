@@ -15,7 +15,8 @@ class AddExpense extends Component {
     expenseDate: '',
     expenseNote: '',
     budgetDefault: null,
-    categoryDefault: ''
+    categoryDefault: '',
+    budget_id: ''
 
   }
 
@@ -37,16 +38,14 @@ class AddExpense extends Component {
       }
       this.setState(expense, () => {
         this.categoryDefault()
-        this.getBudgetCategories(this.state.categoryChoice)
       })
-      APICalls.get(this.props.api.budgets)
+      APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
         .then(budgets => this.setState({ budgets }))
 
     } else {
-      APICalls.get(this.props.api.budgets)
+      APICalls.getWithQuery(this.props.api.budgets, 'archived', false)
         .then(budgets => {
           this.setState({ budgets }, () => this.categoryDefault())
-
         })
     }
   }
@@ -55,7 +54,11 @@ class AddExpense extends Component {
     if (this.props.expense) {
       return APICalls.getOne(this.props.api.categories, this.state.categoryChoice)
         .then(category => {
-          this.setState({ categoryDefault: <option value={this.state.categoryChoice}>{category.name}</option> })
+          this.setState({
+            categoryDefault: <option value={this.state.categoryChoice}>{category.name}</option>,
+            budget_id: category.budget_id
+          }, ()=> this.getBudgetCategories(this.state.budget_id)
+          )
           return APICalls.getOneWithUrl(category.budget)
             .then(budget => {
               this.setState({ budgetDefault: <option value={budget.id}>{budget.name}</option> })
@@ -63,9 +66,9 @@ class AddExpense extends Component {
         })
     }
     else {
-      this.setState({ categoryDefault: <option value="0">Default</option> }, ()=> this.state.categoryDefault)
+      this.setState({ categoryDefault: <option value="0">Pick a category</option> }, () => this.state.categoryDefault)
       this.setState({
-        budgetDefault: <option value="0">Default</option>
+        budgetDefault: <option value="0">Pick a budget</option>
       })
 
     }
@@ -98,15 +101,15 @@ class AddExpense extends Component {
       </>
     }
     // TODO: SHow a warning when a budget doesn't have categories
-    else if(this.state.categories < 1 && this.state.categoryChoice !== null){
-      form= <p className="alert alert-danger">This budget has no categories. Expense cannont be added.</p>
+    else if (this.state.categories < 1 && this.state.categoryChoice !== null) {
+      form = <p className="alert alert-danger">This budget has no categories. Expense cannont be added.</p>
 
     }
     return form
   }
 
-  noCategories(){
-    if(this.state.categories < 1){
+  noCategories() {
+    if (this.state.categories < 1) {
       return <p className="danger">This budget has no categories. Expense cannont be added.</p>
     }
   }
@@ -202,7 +205,7 @@ class AddExpense extends Component {
 
         </Form>
       )
-    }else{
+    } else {
       return <p>loading</p>
     }
   }
