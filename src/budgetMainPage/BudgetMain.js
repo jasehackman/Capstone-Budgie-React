@@ -80,18 +80,25 @@ class BudgetMain extends Component {
     } else {
       return (
         <div className="">
-          <div className=" card m-3 pt-4 pb-4" >
-            <div className=" card  d-flex justify-content-between align-items-baseline ">
-              <div className=''>
+          <div className="row card m-3 pt-4 pb-4" >
+            <div className="col d-flex justify-content-between">
+              <div>
                 <button className=" btn btn-primary" onClick={this.toggle}>+ Budget</button>
               </div>
-              <div className=" ">
+              <div className="mx-auto ">
                 <h1 className="">Budgets</h1>
               </div>
-              <div className="custom-control custom-switch d-flex align-items-center mb-0">
+              <div className="custom-control custom-switch">
                 <input type="checkbox" className="custom-control-input" id="archived" onChange={() => this.archiveClick()} />
                 <label className="custom-control-label" htmlFor="archived">Show Archived</label>
               </div>
+            </div>
+
+          </div>
+          <NewItemModal modal={this.state.modal} toggle={this.toggle} get={this.getBudgets} form={<BudgetForm get={this.getBudgets} url={this.props.api.budgets} toggle={this.toggle} user={this.props.api.users} />} />
+          <div className="container">
+            <div className="row">
+
             </div>
           </div>
 

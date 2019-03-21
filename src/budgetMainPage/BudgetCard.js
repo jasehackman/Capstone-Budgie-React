@@ -16,8 +16,8 @@ class BudgetMain extends Component {
             </div>
             <div className="d-flex justify-content-between">
               <p>{this.props.budget.spent}</p>
-              <p>Remaining:{this.props.budget.amount}</p>
-              <p>{this.props.budget.remaining}</p>
+              <p>Remaining: {this.props.budget.remaining}</p>
+              <p>{this.props.budget.amount}</p>
             </div>
             <Progress value={this.props.budget.percent} />
           </div>
