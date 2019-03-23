@@ -20,6 +20,20 @@ class ExpenseInList extends Component {
   }
 
   componentDidMount() {
+    this.stateSetter()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.stateSetter()
+    }
+  }
+  deleteExpense() {
+    APICalls.delete(this.props.apiExpenses, this.props.expense.id)
+      .then(() => this.props.getExpenses())
+  }
+
+  stateSetter(){
     this.setState({
       editExpense: this.props.expense,
       editName: this.props.expense.name,
@@ -27,10 +41,6 @@ class ExpenseInList extends Component {
       editDate: this.props.expense.date,
       editnotes: this.props.expense.notes
     })
-  }
-  deleteExpense() {
-    APICalls.delete(this.props.apiExpenses, this.props.expense.id)
-      .then(() => this.props.getExpenses())
   }
 
   editExpense() {
